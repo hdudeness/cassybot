@@ -1,39 +1,20 @@
-var Discord = require('discord.io');
-var logger = require('winston');
-var auth = require('./auth.json');
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
+const Discord = require("discord.js");
+const client = new Discord.Client();
+const login = require('./auth.json');
+const config = require('./json/config.json');
+
+client.on("ready", () => {
+    console.log("Logged in, ready to go!");
 });
-logger.level = 'debug';
-// Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
+
+client.on("message", (message) => {
+
+    if (!message.content.startsWith(config.prefix) || message.author.bot)
+        return;
+
+    if (message.content.startsWith(config.prefix + "ping")) {
+        message.channel.send("Pong!");
+    }
 });
-bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
-});
-bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    if (message.substring(0, 1) == '!') {
-        var args = message.substring(1).split(' ');
-        var cmd = args[0];
-       
-        args = args.splice(1);
-        switch(cmd) {
-            // !ping
-            case 'ping':
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Pong!'
-                });
-            break;
-            // Just add any case commands if you want to..
-         }
-     }
-});
+
+client.login(config.token);

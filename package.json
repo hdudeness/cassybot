@@ -5,7 +5,12 @@
   "main": "bot.js",
   "author": "TSP3",
   "dependencies": {
+    "better-sqlite-pool": "^0.2.0",
+    "bluebird": "^3.5.3",
     "discord.io": "^2.5.3",
+    "discord.js": "^11.4.2",
+    "enmap": "^4.7.1",
+    "sqlite3": "^4.0.6",
     "winston": "^3.2.1"
   }
 }
