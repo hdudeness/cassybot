@@ -6,6 +6,7 @@ const config = require('./json/config.json');
 client.on('ready', () => {
     console.log("Logged in, ready to go!");
     console.log(`Bot ID: ${client.user.tag}`);
+    client.user.setActivity("with Team 3 in JavaScript"); // Changes bot activity
 });
 
 client.on('message', message => {
