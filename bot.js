@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const login = require('./auth.json');
+//const login = require('./auth.json');
 const config = require('./json/config.json');
 
 const SQLite = require("better-sqlite3");
@@ -24,7 +24,7 @@ client.on('ready', () => {
     // Logging in
     console.log("Logged in, ready to go!");
     console.log(`Bot ID: ${client.user.tag}`);
-    client.user.setActivity("with Team 3 in JavaScript"); // Changes bot activity
+    client.user.setActivity("with Team 3 in JavaScript", { type: `STREAMING`, url: `https://www.twitch.tv/stairs_nooo` }); // Changes bot activity
 });
 
 client.on('message', message => {
@@ -37,7 +37,7 @@ client.on('message', message => {
 
     // Change command to lower case (i.e. !pInG = !ping)
     const command = args.shift().toLowerCase();
-
+    
     // Run command file
     try {
         let commandFile = require(`./commands/${command}.js`);
@@ -45,23 +45,6 @@ client.on('message', message => {
     } catch (err) {
         // Error - Print to Console
         console.error(err);
-    }
-
-    // --Credits setup--
-    let currency = client.getCredits.get(message.author.id);
-    // If a user does not exist in the database, add them.
-    if (!currency) {
-        currency = {
-            id: message.author.id,
-            user: message.author.id,
-            // Starting amount, can be changed freely.
-            credits: 100
-        }
-    client.setCredits.run(currency);
-    }
-    // Command to check the amount of credits you have - TODO: make credits.js file in commands folder.
-    if (command == "credits") {
-        return message.reply(`You have ${currency.credits} credits!`);
     }
 
 });
