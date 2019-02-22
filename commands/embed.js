@@ -1,7 +1,7 @@
 exports.run = (client, message, args) => {
     message.channel.send({
         embed: {
-            color: 0xffffff, // Changes color of left-side line
+            color: 0xfcce01, // Changes color of left-side line
             author: {
                 name: client.user.username,
                 icon_url: client.user.avatarURL
