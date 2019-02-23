@@ -1,6 +1,6 @@
-exports.run = (client, msg, args) => {
+exports.run = (client, message, args) => {
 
-    msg.channel.send({
+    message.channel.send({
         embed: {
             color: 0xd4de65,
             author: {
@@ -9,11 +9,27 @@ exports.run = (client, msg, args) => {
             },
             description: 'This is a list of everything I can do!',
             fields: [{
-                name: "All commands!",
-                value: '!help - This command. \n!ping - Pong',
+                name: "**ALL COMMANDS**",
+                value: '**!help** - This command. \n' +
+                    '**!credits** - Displays user\'s credits.\n' +
+                    '**!ping** - Pong\n' +
+                    '**!coinflip**\n' +
+                    '**!leaderboards** [TO DO]\n' +
+                    '**!report** [TO DO]\n' +
+                    '**!kick** [TO DO]\n' +
+                    '**!embed** [EDIT]\n',
                 inline: true
+            },
+            {
+                name: "**GAMES**",
+                value: `11`,
+                inline: true
+            }],
+            timestamp: new Date(),
+            footer: {
+                icon_url: message.author.avatarURL,
+                text: `Requested by ${message.author.tag}`
             }
-            ]
         }
     })
 }

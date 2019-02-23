@@ -53,6 +53,9 @@ client.on('message', message => {
         let commandFile = require(`./commands/${command}.js`);
         commandFile.run(client, message, args);
     } catch (err) {
+
+        message.reply('Sorry! That is not a command that I know. Say **!help** to receive a list of commands I know!');
+        
         // Error - Print to Console
         console.error(err);
     }
