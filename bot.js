@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-//const login = require('./auth.json');
 const config = require('./json/config.json');
 
 const SQLite = require("better-sqlite3");
