@@ -28,6 +28,17 @@ client.on('ready', () => {
 
 client.on('message', message => {
 
+    // Log Message in Console 
+    console.log(message.content);
+    
+    // If Someones Flips a Table
+    if(message.content == '(╯°□°）╯︵ ┻━┻'){
+        // Unflip Table
+        message.channel.send('┬─┬ ノ( ゜-゜ノ)');
+        message.channel.send('Please **DON\'T** flip tables. This is a professionally organized server. If you want to flip tables you may leave.');
+    }
+    console.log('--------------------')
+
     if (!message.content.startsWith(config.prefix) || message.author.bot)
         return;
 
