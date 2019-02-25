@@ -18,6 +18,7 @@ exports.run = (client, message, args) => {
     var coin = getRandomInt(1);
 
     // TO DO -- Ask Heads or tails
+    //const msg = await message.channel.awaitMessages(msg => msg.content.includes("help"), {time: 5000}); 
 
     // If 0 its Heads
     if (coin == 0) {

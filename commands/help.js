@@ -1,5 +1,6 @@
-exports.run = (client, message, args) => {
+const buffer = require('./testbuffer.js');
 
+exports.run = (client, message, args) => {
     message.channel.send({
         embed: {
             color: 0xd4de65,
@@ -32,4 +33,10 @@ exports.run = (client, message, args) => {
             }
         }
     })
+
+    // If CassyBot -> Test
+    if(message.author == client.user){
+        message.channel.send('**Passed**');
+        buffer.testHelp = true;
+    }
 }
