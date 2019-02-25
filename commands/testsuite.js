@@ -1,11 +1,20 @@
-const buffer = require('./testbuffer.js');
+const buff = require('./testbuffer.js');
 
 exports.run = async(client, message, args) => {
     message.channel.send('!help')
-    const msg = await message.channel.awaitMessages(msg => msg.content.includes("help"), {time: 5000}); 
+    var msg = await message.channel.awaitMessages(msg => msg.content.includes("help"), {time: 5000}); 
     
-    if(!buffer.testHelp){
-        console.log(buffer.testHelp)
+    console.log(buff.help)
+    if(!buff.help){
+        console.log(buff.help)
+        message.channel.send('!terminate')
+    }
+
+    message.channel.send('!buggycommand')
+    msg = message.channel.awaitMessages(msg => msg.content.includes("buggycommand"), {time: 5000});
+
+    if(!buff.bug){
+        console.log(buff.bug)
         message.channel.send('!terminate')
     }
 }
