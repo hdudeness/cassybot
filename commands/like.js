@@ -1,3 +1,5 @@
+const buff = require('./testbuffer.js');
+
 exports.run = (client, message, args) => {
     message.channel.send("Like").then(function (m) {
         m.edit(`
@@ -23,5 +25,10 @@ exports.run = (client, message, args) => {
         ████████████████████████████████████████
         `)
     })
+    
+    // If CassyBot -> Test
+    if (message.author == client.user) {
+        buff.like = true;
+    }
 }
 config: { }

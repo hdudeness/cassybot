@@ -36,7 +36,6 @@ exports.run = (client, message, args) => {
 
     // If CassyBot -> Test
     if (message.author == client.user) {
-        message.channel.send('**Passed**');
         buff.help = true;
     }
 }

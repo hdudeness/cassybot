@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const collector = new Discord.Client();
+const buff = require('./testbuffer.js');
 
 exports.run = (client, message, args) => {
 
@@ -39,6 +40,10 @@ exports.run = (client, message, args) => {
         });
     }
 
+    // If CassyBot -> Test
+    if (message.author == client.user) {
+        buff.coin = true;
+    }
 }
 
 // Returns Random Number 0 - Max
