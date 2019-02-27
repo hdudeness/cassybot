@@ -28,6 +28,7 @@ exports.run = async(client, message, args) => {
         message.channel.send('**Passed**');
     }
 
+    /*
     // TEST LIKE
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!like')
@@ -40,8 +41,9 @@ exports.run = async(client, message, args) => {
     } else {
         message.channel.send('**Passed**');
     }
-
-    // TEST LIKE
+    */
+   
+    // TEST PING
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!ping')
     const msgPing = await message.channel.awaitMessages(msgPing => msgPing.content.includes("ping"), {time: 3000});

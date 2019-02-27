@@ -39,10 +39,10 @@ exports.run = (client, message, args) => {
             ]
         });
     }
-
+    buff.coin = true;
     // If CassyBot -> Test
     if (message.author == client.user) {
-        buff.coin = true;
+        
     }
 }
 
