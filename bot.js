@@ -57,11 +57,11 @@ client.on('message', message => {
     const ytmessage = message.content.toLowerCase();
     const ytargs = message.content.split(' ').slice(1).join(" ");
 
-    if (ytmessage.startsWith(prefix + "join")) {
-        message.member.voiceChannel.join()
-    }
     // MUSIC
-    if (ytmessage.startsWith(prefix + "play")) {
+    if (ytmessage.startsWith(prefix + "leave")){
+        message.member.voiceChannel.leave();
+    }
+    else if (ytmessage.startsWith(prefix + "play")) {
         // If member is in a voice channel
         if (message.member.voiceChannel) {
             // Check if song is playing
@@ -87,7 +87,7 @@ client.on('message', message => {
                 });
             }
         } else {
-            message.reply(" you need to be in a voice channel!");
+            message.reply(" please **join** a **voice channel!**");
         }
     } else {
 
