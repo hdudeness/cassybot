@@ -52,7 +52,7 @@ client.on('ready', () => {
 
 client.on('message', message => {
 
-    
+
     const member = message.member;
     const ytmessage = message.content.toLowerCase();
     const ytargs = message.content.split(' ').slice(1).join(" ");
@@ -66,9 +66,9 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             // Check if song is playing
             if (queue.length > 0 || isPlaying) {
-                getID(ytargs, function(id) {
+                getID(ytargs, function (id) {
                     add_to_queue(id);
-                    fetchVideoInfo(id, function(err, videoInfo) {
+                    fetchVideoInfo(id, function (err, videoInfo) {
                         if (err) throw new Error(err);
                         message.reply(" added to queue: **" + videoInfo.title + "**");
                         queueNames.push(videoInfo.title);
@@ -76,10 +76,10 @@ client.on('message', message => {
                 });
             } else {
                 isPlaying = true;
-                getID(ytargs, function(id) {
+                getID(ytargs, function (id) {
                     queue.push(id);
                     playMusic(id, message);
-                    fetchVideoInfo(id, function(err, videoInfo) {
+                    fetchVideoInfo(id, function (err, videoInfo) {
                         if (err) throw new Error(err);
                         queueNames.push(videoInfo.title);
                         message.reply(" now playing: **" + videoInfo.title + "**");
@@ -89,45 +89,45 @@ client.on('message', message => {
         } else {
             message.reply(" you need to be in a voice channel!");
         }
-    } 
+    } else {
 
-    
-    // Log Message in Console 
-    console.log(message.content);
-    
-    // If Someones Flips a Table
-    if(message.content == '(╯°□°）╯︵ ┻━┻'){
-        // Unflip Table
-        message.channel.send('┬─┬ ノ( ゜-゜ノ)');
-        message.channel.send('Please **DON\'T** flip tables. This is a professionally organized server. If you want to flip tables you may leave.');
-    }
 
-    console.log(' ')
-    console.log('--------------------')
-    console.log(message.author.username + " || User ID: " + client.user.id + " || Channel ID: " + message.channel.id)
-    if (!message.content.startsWith(config.prefix) || (message.author.bot && (message.author != client.user)))
-        return;
+        // Log Message in Console 
+        console.log(message.content);
 
-    // Remove '!' from command
-    const args = message.content.slice(config.prefix.length).trim().split(/ + /g);
-
-    // Change command to lower case (i.e. !pInG = !ping)
-    const command = args.shift().toLowerCase();
-    
-    // Run command file
-    try {
-        let commandFile = require(`./commands/${command}.js`);
-        commandFile.run(client, message, args);
-    } catch (err) {
-
-        if (message.author != client.user){
-            message.reply('Sorry! That is not a command that I know. Say **!help** to receive a list of commands I know!');
+        // If Someones Flips a Table
+        if (message.content == '(╯°□°）╯︵ ┻━┻') {
+            // Unflip Table
+            message.channel.send('┬─┬ ノ( ゜-゜ノ)');
+            message.channel.send('Please **DON\'T** flip tables. This is a professionally organized server. If you want to flip tables you may leave.');
         }
-        
-        // Error - Print to Console
-        console.error(err);
+
+        console.log(' ')
+        console.log('--------------------')
+        console.log(message.author.username + " || User ID: " + client.user.id + " || Channel ID: " + message.channel.id)
+        if (!message.content.startsWith(config.prefix) || (message.author.bot && (message.author != client.user)))
+            return;
+
+        // Remove '!' from command
+        const args = message.content.slice(config.prefix.length).trim().split(/ + /g);
+
+        // Change command to lower case (i.e. !pInG = !ping)
+        const command = args.shift().toLowerCase();
+
+        // Run command file
+        try {
+            let commandFile = require(`./commands/${command}.js`);
+            commandFile.run(client, message, args);
+        } catch (err) {
+
+            if (message.author != client.user) {
+                message.reply('Sorry! That is not a command that I know. Say **!help** to receive a list of commands I know!');
+            }
+
+            // Error - Print to Console
+            console.error(err);
+        }
     }
- 
 });
 
 function playMusic(id, message) {
@@ -179,9 +179,9 @@ function add_to_queue(strID) {
 
 function search_video(query, callback) {
     request("https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=" + encodeURIComponent(query) + "&key=" + yt_api_key, function (error, response, body) {
-    var json = JSON.parse(body);
-    callback(json.items[0].id.videoId);
-        
+        var json = JSON.parse(body);
+        callback(json.items[0].id.videoId);
+
     });
 }
 
