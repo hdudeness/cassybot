@@ -55,7 +55,7 @@ client.on('message', message => {
     
     const member = message.member;
     const ytmessage = message.content.toLowerCase();
-    const args = message.content.split(' ').slice(1).join(" ");
+    const ytargs = message.content.split(' ').slice(1).join(" ");
 
     if (ytmessage.startsWith(prefix + "join")) {
         message.member.voiceChannel.join()
@@ -66,7 +66,7 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             // Check if song is playing
             if (queue.length > 0 || isPlaying) {
-                getID(args, function(id) {
+                getID(ytargs, function(id) {
                     add_to_queue(id);
                     fetchVideoInfo(id, function(err, videoInfo) {
                         if (err) throw new Error(err);
@@ -76,7 +76,7 @@ client.on('message', message => {
                 });
             } else {
                 isPlaying = true;
-                getID(args, function(id) {
+                getID(ytargs, function(id) {
                     queue.push(id);
                     playMusic(id, message);
                     fetchVideoInfo(id, function(err, videoInfo) {
@@ -91,7 +91,7 @@ client.on('message', message => {
         }
     } 
 
-    /*
+    
     // Log Message in Console 
     console.log(message.content);
     
@@ -127,7 +127,7 @@ client.on('message', message => {
         // Error - Print to Console
         console.error(err);
     }
- */
+ 
 });
 
 function playMusic(id, message) {
