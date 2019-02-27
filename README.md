@@ -2,6 +2,7 @@
 Team Software Project 3's Discord Casino Bot
 
 --------Dependency versions (MAKE SURE YOU ARE UP TO DATE WITH REPO!!!)--------
+
 Node.js - 11.10
 Discord.js - 11.4.2
 Better SQlite3 - 5.4.0
