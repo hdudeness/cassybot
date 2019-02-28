@@ -56,6 +56,46 @@ exports.run = async(client, message, args) => {
         message.channel.send('**Passed**');
     }
 
+    // TEST TABLEFLIP
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('(╯°□°）╯︵ ┻━┻')
+    const msgTable= await message.channel.awaitMessages(msgTable => message.content.includes("(╯°□°）╯︵ ┻━┻"), {time: 5000});
+
+    if(!buff.table){
+        console.log(buff.table)
+        message.reply('**ERROR**')
+        return;
+    } else {
+        message.channel.send('**Passed**');
+    }
+
+    /*
+    // TEST NO COMMAND
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!NOTACOMMAND')
+    const msgNa= await message.channel.awaitMessages(msgNa => message.content.includes(""), {time: 5000});
+
+    if(!buff.na){
+        console.log(buff.na)
+        message.reply('**ERROR**')
+        return;
+    } else {
+        message.channel.send('**Passed**');
+    } */
+
+    // TEST LEADERBOARDS
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!leaderboards')
+    const msgLeader= await message.channel.awaitMessages(msgLeader => message.content.includes("leaderboards"), {time: 5000});
+    
+    if(!buff.leader){
+        console.log(buff.leader)
+        message.reply('**ERROR**')
+        return;
+    } else {
+        message.channel.send('**Passed**');
+    }
+
     // BUGGY TEST -- INTENTIONAL
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!buggycommand')

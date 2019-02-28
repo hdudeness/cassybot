@@ -4,5 +4,7 @@ module.exports = {
     coin: false,
     credits: false,
     like: false,
-    ping: false
+    ping: false,
+    table: true,
+    leader: false
 }
