@@ -14,16 +14,16 @@ exports.run = (client, message, args) => {
                 value: '**!help** - This command. \n' +
                     '**!credits** - Displays user\'s credits.\n' +
                     '**!ping** - Pong\n' +
-                    '**!coinflip**\n' +
+                    '**!coinflip** - Flips a coin... Heads or Tails?\n' +
                     '**!leaderboards** [TO DO]\n' +
                     '**!report** [TO DO]\n' +
                     '**!kick** [TO DO]\n' +
-                    '**!embed** [EDIT]\n',
+                    '**!embed** [EDIT] - Template\n',
                 inline: true
             },
             {
                 name: "**GAMES**",
-                value: `11`,
+                value: `**!coinflip**`,
                 inline: true
             }],
             timestamp: new Date(),
