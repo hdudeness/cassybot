@@ -13,7 +13,9 @@ Better SQlite3 - 5.4.0
 2. Extract zip file to any accessable location and record the path to the bin folder. (i.e, C:\FFmpeg\bin)
 3. Open CMD as administrator
 4. Run the following command, inserting the path your previously took note of: 
-	setx /M PATH "<YOUR-PATH-TO-BIN-HERE>;%PATH%"
+	setx /M PATH "C:\YOUR-PATH-TO-BIN-HERE\FFmpeg\bin;%PATH%"
 5. Run start.bat
-6. In Discord, test the bot by running "!play song" minus the quotations.
-7. If you have no errors in the terminal, you're all set.
+6. In Discord, join any voice channel.
+7. Test the bot by running the command "!play NAME-OF-ANY-SONG" without the quotations.
+8. The bot should join the voice call and start playing the song (Make sure you have the bot's voice volume up).
+9. If you have no errors in the terminal, you're all set.
