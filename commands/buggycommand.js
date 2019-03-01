@@ -11,6 +11,5 @@ exports.run = (client, message, args) => {
 
 // IM THE BUG -- MESSAGE IS OUTSIDE BRACKETS SO ITS NOT DEFINED
 if (message.author == client.user) {
-    message.channel.send('**Passed**');
     buffer.bug = true;
 }
