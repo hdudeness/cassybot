@@ -1,54 +1,83 @@
-// MUSIC
+// MUSIC NODE_MODULES
 const ytdl = require("ytdl-core");
 const request = require("request");
 const fs = require("fs");
 const getYouTubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
 
-
-
-
+// SET UP QUEUES
 var queue = [];
 var queueNames = [];
 var isPlaying = false;
+
+// JOIN CALL -- DISPATCHER
 var dispatcher = null;
+
+// SKIP SONG -- TO DO
 var skipReq = 0;
 var skippers = [];
 
-var guilds = {};
-
-
 exports.run = (client, message, args, config, member, ytmessage, ytargs, ytconfig) => {
     const yt_api_key = ytconfig.yt_api_key;
+    
+    // DON'T USE
     const bot_controller = config.bot_controller;
     const prefix = config.prefix;
     const discord_token = ytconfig.discord_token;
 
     // If member is in a voice channel
     if (message.member.voiceChannel) {
+
         // Check if song is playing
         if (queue.length > 0 || isPlaying) {
+
+            // Get Youtube Video ID
             getID(ytargs, function (id) {
+
+                // Add YouTube Video to Queue using ID
                 add_to_queue(id);
+
+                // After Video Info is retrieved 
                 fetchVideoInfo(id, function (err, videoInfo) {
+
+                    // Check for error
                     if (err) throw new Error(err);
+
+                    // Message Channel -> Song in queue with video info
                     message.reply(" added to queue: **" + videoInfo.title + "**");
                     queueNames.push(videoInfo.title);
                 });
             });
+            // Otherwise
         } else {
+
+            // Set song is playing to true
             isPlaying = true;
+
+            // Get Youtube Video ID
             getID(ytargs, function (id) {
+
+                // Add YouTube Video to Queue using ID
                 queue.push(id);
+
+                // Join call and play video/song
                 playMusic(id, message);
+
+                // After Video Info is retrieved 
                 fetchVideoInfo(id, function (err, videoInfo) {
+                    
+                    // Check for error
                     if (err) throw new Error(err);
+
+                    // Message Channel -> Song in queue with video info
                     queueNames.push(videoInfo.title);
                     message.reply(" now playing: **" + videoInfo.title + "**");
                 });
             });
         }
     } else {
+
+        // If user making request is not in a voice channel - tell them to join
         message.reply(" please **join** a **voice channel!**");
     }
 
@@ -82,12 +111,12 @@ function playMusic(id, message) {
     });
 }
 
-function getID(str, cb) {
+function getID(str, callback) {
     if (isYoutube(str)) {
-        cb(getYouTubeID(str));
+        callback(getYouTubeID(str));
     } else {
         search_video(str, function (id) {
-            cb(id);
+            callback(id);
         });
     }
 }
