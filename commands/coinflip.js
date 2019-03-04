@@ -26,7 +26,7 @@ exports.run = (client, message, args) => {
         // Send Text Above 
         message.channel.send('**HEADS**', {
             files: [
-                "./Images/heads.jpg" // Image to send
+                "./images/heads.jpg" // Image to send
             ]
         });
 
@@ -35,7 +35,7 @@ exports.run = (client, message, args) => {
         // Send Text Above 
         message.channel.send('**TAILS**', {
             files: [
-                "./Images/tails.jpg" // Image to send
+                "./images/tails.jpg" // Image to send
             ]
         });
     }
