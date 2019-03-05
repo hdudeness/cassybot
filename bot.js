@@ -14,6 +14,7 @@ const sql = new SQLite('./user_data/currency.sqlite');
 client.on('ready', () => {
     // Prepare SQL table for user currency
     const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'currency';").get();
+
     if (!table['count(*)']) {
         // Check to see if the table exists, if it doesn't then set it up
         sql.prepare("CREATE TABLE currency (id TEXT PRIMARY KEY, user TEXT, credits INTEGER);").run();
@@ -34,42 +35,47 @@ client.on('ready', () => {
 
 client.on('message', message => {
 
+    // Music Arguments
     const member = message.member;
     const ytmessage = message.content.toLowerCase();
     const ytargs = message.content.split(' ').slice(1).join(" ");
-    
+
     // Remove '!' from command
     const args = message.content.slice(config.prefix.length).trim().split(/ + /g);
 
-     // Change command to lower case (i.e. !pInG = !ping)
-     const command = args.shift().toLowerCase().split(" ")[0]
+    // Change command to lower case (i.e. !pInG = !ping)
+    const command = args.shift().toLowerCase().split(" ")[0]
+
+    // If Someones Flips a Table
+    if (message.content == '(╯°□°）╯︵ ┻━┻') {
+        // Unflip Table
+        message.channel.send('┬─┬ ノ( ゜-゜ノ)');
+        message.channel.send('Please **DON\'T** flip tables. This is a professionally organized server. If you want to flip tables you may leave.');
+    }
 
     // MUSIC
     if (ytmessage.startsWith(prefix + "play" || prefix + "leave")) {
         try {
+            // Search for music commands
             let commandFile = require(`./commands/music/${command}.js`);
             commandFile.run(client, message, args, config, member, ytmessage, ytargs, ytconfig);
+
         } catch (err) {
 
             // Error - Print to Console
             console.error(err);
         }
+        // Otherwise
     } else {
-
 
         // Log Message in Console 
         console.log(message.content);
 
-        // If Someones Flips a Table
-        if (message.content == '(╯°□°）╯︵ ┻━┻') {
-            // Unflip Table
-            message.channel.send('┬─┬ ノ( ゜-゜ノ)');
-            message.channel.send('Please **DON\'T** flip tables. This is a professionally organized server. If you want to flip tables you may leave.');
-        }
-
         console.log(' ')
         console.log('--------------------')
         console.log(message.author.username + " || User ID: " + client.user.id + " || Channel ID: " + message.channel.id)
+
+        // If the message came from a bot other than CassyBot
         if (!message.content.startsWith(config.prefix) || (message.author.bot && (message.author != client.user)))
             return;
 
@@ -85,6 +91,7 @@ client.on('message', message => {
             commandFile.run(client, message, args);
         } catch (err) {
 
+            // If the message is not the bot print
             if (message.author != client.user) {
                 message.reply('Sorry! That is not a command that I know. Say **!help** to receive a list of commands I know!');
             }
@@ -95,4 +102,5 @@ client.on('message', message => {
     }
 });
 
+// Login bot using token
 client.login(config.token);
