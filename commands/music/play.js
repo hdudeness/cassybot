@@ -87,7 +87,8 @@ exports.run = (client, message, args, config, member, ytmessage, ytargs, ytconfi
                                 value: `Duration: ${time} (${videoInfo.duration} seconds)
                                         Genre: ${videoInfo.genre}
                                         Click here for the [Video URL](${videoInfo.url}).
-                                        Current View Count: 🔥${videoInfo.views} views🔥`,
+                                        Current View Count: 🔥${videoInfo.views} views🔥
+                                        **!help** for more options`,
                                 inline: true
                             }
                             ],
