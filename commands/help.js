@@ -22,12 +22,12 @@ exports.run = (client, message, args) => {
                 inline: true
             },
             {
-                name: "**GAMES**",
+                name: "🎰**GAMES**🎰",
                 value: '**!coinflip** - Flips a coin... Heads or Tails?\n',
                 inline: true
             },
             {
-                name: "**MUSIC**",
+                name: "🎧**MUSIC**🎧",
                 value: `**!play <SONG>** - Plays the audio to the given song. (YouTube URL or song info) \n` +
                 '**!leave** - Kicks CassyBot from the voice call. \n' +
                 '**!skip** - Skips the current song. \n' +

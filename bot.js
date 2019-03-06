@@ -87,8 +87,14 @@ client.on('message', message => {
 
         // Run command file
         try {
-            let commandFile = require(`./commands/${command}.js`);
-            commandFile.run(client, message, args);
+            if (message.content == prefix + "blackjack") {
+                let commandFile = require(`./commands/games/${command}.js`);
+                commandFile.run(client, message, args);
+            } else {
+                let commandFile = require(`./commands/${command}.js`);
+                commandFile.run(client, message, args);
+            }
+
         } catch (err) {
 
             // If the message is not the bot print
