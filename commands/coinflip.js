@@ -47,14 +47,12 @@ exports.run = (client, message, args) => {
                 if (message.content == "heads" || message.content == 'h') {
                     userChoice = 'h';
                     choiceCollector.stop(["User picked heads."]);
-                    choiceConfirm = true;
                     message.reply(`you picked heads. Good luck!`);
                     flipCoin();
                 }
                 else if (message.content == "tails" || message.content == "t") {
                     userChoice = 't';
                     choiceCollector.stop(["User picked tails."]);
-                    choiceConfirm = true;
                     message.reply(`you picked tails. Good luck!`);
                     flipCoin();
                 }
@@ -73,21 +71,22 @@ exports.run = (client, message, args) => {
 
         // Heads win
         if (coinDecider > .5 && userChoice == "h") {
-            message.reply(`you won! You bet ` + bet + ` credits and won **` + bet + ` credits!**`);
             win = true;
+            db.exec("UPDATE currency SET credits = credits " + ((win)?"+":"-") +" "+ bet +" WHERE id = " + message.author.id +";");
+            message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
         }
         // Tails win
         else if (coinDecider < .5 && userChoice == "t") {
-            message.reply(`you won! You bet ` + bet + ` credits and won **` + bet + ` credits!**`);
             win = true;
+            db.exec("UPDATE currency SET credits = credits " + ((win)?"+":"-") +" "+ bet +" WHERE id = " + message.author.id +";");
+            message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
         }
         // Loss
         else {
-            message.reply(`you lost! Say goodbye to **` + bet + ` credits!**`);
             win = false;
+            db.exec("UPDATE currency SET credits = credits " + ((win)?"+":"-") +" "+ bet +" WHERE id = " + message.author.id +";");
+            message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
         }
-        // Update user currency
-        db.exec("UPDATE currency SET credits = credits " + ((win)?"+":"-") +" "+ bet +" WHERE id = " + message.author.id +";");
     }
 
     getUserInput();
