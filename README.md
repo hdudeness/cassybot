@@ -1,6 +1,8 @@
 # Cassy The Casino Bot
 
-Team Software Project 3's Discord Casino Bot
+Team Software Project 3's Discord Casino Bot:
+
+CassyBot is a Discord bot being developed using Node.js, Discord.js, and Better SQL 3. Cassy can perform a few simple tasks which include playing music, flipping a coin, and assisting the user. In the future, Cassy will be able to join any server and provide the server with Casino Games! She will support the games: Blackjack, Roulette, and Slots! Contact us to learn more!
 
 ## Getting Started
 
@@ -80,7 +82,7 @@ Add additional notes about how to deploy this on a live system
 ## Authors
 
 * **Tyler Marenger** - *Initial work* - [tjmareng](https://github.com/tjmareng)
-* **Christian Clemmons** - *Initial work*
-* **Harry Taylor** - *Initial work*
-* **Colton Nelson** - *Initial work*
+* **Christian Clemmons** - *Initial work* - [ccclemmo](https://github.com/ccclemmo)
+* **Harry Taylor** - *Initial work* - [hdudeness](https://github.com/hdudeness)
+* **Colton Nelson** - *Initial work* - [nelcol31](https://github.com/nelcol31)
 * **Joe Tressler** - *Initial work*
