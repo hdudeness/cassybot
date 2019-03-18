@@ -9,9 +9,16 @@ CassyBot is a Discord bot being developed using Node.js, Discord.js, and Better 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
+
 Installing Node.js:
-	TO DO
+
+```
+1. npm install - installs all dependencies
+2. Check for the node_modules folder
+```
+
 Installing node_modules:
+
 ```
 1. npm install - installs all dependencies
 2. Check for the node_modules folder
