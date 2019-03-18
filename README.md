@@ -13,8 +13,13 @@ These instructions will get you a copy of the project up and running on your loc
 Installing Node.js:
 
 ```
-1. npm install - installs all dependencies
-2. Check for the node_modules folder
+1. Visit https://nodejs.org/en/ or https://nodejs.org/en/download/
+2. Click on the 'Current' Download or click the 'Current' Tab within the download page
+3. Run the file
+4. After installation, close the terminal
+5. Open the terminal and type 'node --version'
+6. v11.12.0 should appear
+7. If this is not the case contact Tyler
 ```
 
 Installing node_modules:
