@@ -1,4 +1,5 @@
 const buff = require('./testbuffer.js');
+const fs = require('fs');
 
 exports.run = async(client, message, args) => {
     
@@ -10,9 +11,19 @@ exports.run = async(client, message, args) => {
     if(!buff.help){
         console.log(buff.help)
         message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Help - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
         return;
     } else {
         message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Help - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
     }
     
     // TEST COINFLIP
@@ -23,9 +34,19 @@ exports.run = async(client, message, args) => {
     if(!buff.coin){
         console.log(buff.coin)
         message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Coinflip - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
         return;
     } else {
         message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Coinflip - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
     }
 
     /*
@@ -51,9 +72,19 @@ exports.run = async(client, message, args) => {
     if(!buff.ping){
         console.log(buff.ping)
         message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Ping - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
         return;
     } else {
         message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Ping - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
     }
 
     // TEST TABLEFLIP
@@ -64,9 +95,19 @@ exports.run = async(client, message, args) => {
     if(!buff.table){
         console.log(buff.table)
         message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Tableflip - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
         return;
     } else {
         message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Tableflip - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
     }
 
     /*
@@ -91,9 +132,19 @@ exports.run = async(client, message, args) => {
     if(!buff.leader){
         console.log(buff.leader)
         message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Leaderboards - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
         return;
     } else {
         message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Leaderboards - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
     }
 
     // BUGGY TEST -- INTENTIONAL
@@ -104,9 +155,19 @@ exports.run = async(client, message, args) => {
     if(!buff.bug){
         console.log(buff.bug)
         message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Bug - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
         return;
     } else {
         message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Bug - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
     }
 }
 
