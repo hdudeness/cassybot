@@ -22,7 +22,7 @@ exports.run = (client, message, args) => {
                 name: client.user.username + " Leaderboards",
                 icon_url: client.user.avatarURL
             },
-            description: 'This is a list of everything I can do!',
+            description: 'Here is how you stack up against your friends!',
             fields: [{
                 name: "**TOP 10**",
                 value: 
