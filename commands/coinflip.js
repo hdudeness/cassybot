@@ -38,17 +38,17 @@ exports.run = (client, message, args) => {
                     description: "This is one of the many games that I offer! Say '!help' for a complete list all games!",
                     fields: [{
                         name: "WELCOME TO COINFLIP!",
-                        value: `This is a simple game that I provide. You will select a bet amount. Then, you will get to guess whether to coin will flip to heads or tails. Finally, I will tell you the outcome. Good Luck! `,
+                        value: `This is a simple game that I provide. You will select a bet amount. Then, you will get to guess whether a coin will flip and land on heads or tails. Finally, I will tell you the outcome. If you win you get double your money! If you loss I keep the credits you chose to bet. Good Luck! `,
                         inline: true
                     },
                     {
                         name: "RULES",
-                        value: `☐ DO NOT LEAVE - You cannot dodge your loss
-                                ☐ FOLLOW THE INSTRUCTIONS`,
+                        value: `• DO NOT LEAVE - You cannot dodge your loss
+                                • FOLLOW THE INSTRUCTIONS`,
                         inline: true
                     }, {
                         name: "ENTER A NUMBER FOR YOU BET AMOUNT TO BEGIN:",
-                        value: `Just type an integer into the chat`,
+                        value: `**Just type an integer into the chat**`,
                         inline: true
                     },
                     ]
@@ -104,24 +104,53 @@ exports.run = (client, message, args) => {
         var coinDecider = getRandomInt(1);
         var win = false;
 
-        // Heads win
-        if (coinDecider > .5 && userChoice == "h") {
-            win = true;
-            db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-            message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        if (coinDecider > .5) {
+            message.channel.send(
+                {
+                    embed: {
+                        color: 0xfcce01, // Changes color of left-side line
+                        description: "**HEADS**",
+                        files: [
+                            "./images/heads.jpg" // Image to send
+                        ]
+                    }
+                }
+            );
+        } else {
+            message.channel.send(
+                {
+                    embed: {
+                        color: 0xfcce01, // Changes color of left-side line
+                        description: "**TAILS**",
+                        files: [
+                            "./images/tails.jpg" // Image to send
+                        ]
+                    }
+                }
+            );
         }
-        // Tails win
-        else if (coinDecider < .5 && userChoice == "t") {
-            win = true;
-            db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-            message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
-        }
-        // Loss
-        else {
-            win = false;
-            db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-            message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
-        }
+
+        setTimeout(() => {
+            // Heads win
+            if (coinDecider > .5 && userChoice == "h") {
+                win = true;
+                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+                message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+            }
+            // Tails win
+            else if (coinDecider < .5 && userChoice == "t") {
+                win = true;
+                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+                message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+            }
+            // Loss
+            else {
+                win = false;
+                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+                message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+            }
+        }, 1000);
+
     }
 
     getUserInput();
