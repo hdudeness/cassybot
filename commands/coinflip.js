@@ -15,13 +15,19 @@ exports.run = (client, message, args) => {
     var bet = 1;
 
     function getUserInput() {
+        // Make sure the user is in the database.
+        if (!currency) {
+            message.reply(`Welcome! I will give you 100 credits to start.`);
+            currency = {
+                id: message.author.id,
+                user: message.author.id,
+                credits: 100
+            }
+            client.setCredits.run(currency);
+        }
         // Get bet amount
         if (!betConfirm) {
-<<<<<<< HEAD
-            const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, {time: 100000});
-=======
-            const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 10000 });
->>>>>>> 969dc70eabdac664a03121f63d7d9761f6499ad5
+            const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
             message.channel.send(`Welcome to coinflip! Enter your bet amount...`);
             console.log(betCollector);
             betCollector.on('collect', message => {
@@ -43,13 +49,8 @@ exports.run = (client, message, args) => {
             })
         }
         else {
-<<<<<<< HEAD
-        // Get heads or tails
-            const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, {time: 100000});
-=======
             // Get heads or tails
-            const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 10000 });
->>>>>>> 969dc70eabdac664a03121f63d7d9761f6499ad5
+            const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
             message.channel.send(`Now enter heads or tails...`);
             console.log(choiceCollector);
             choiceCollector.on('collect', message => {
