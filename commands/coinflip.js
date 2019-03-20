@@ -28,7 +28,7 @@ exports.run = (client, message, args) => {
         // Get bet amount
         if (!betConfirm) {
             const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
-            message.channel.send(`Welcome to coinflip! Enter your bet amount...`);
+            message.channel.send(`Welcome to coinflip! Enter a number for your bet amount...`);
             console.log(betCollector);
             betCollector.on('collect', message => {
                 if (message.content == 0 || message.content < 0) {
@@ -51,7 +51,7 @@ exports.run = (client, message, args) => {
         else {
             // Get heads or tails
             const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
-            message.channel.send(`Now enter heads or tails...`);
+            message.channel.send(`Now enter "heads" or "tails"...`);
             console.log(choiceCollector);
             choiceCollector.on('collect', message => {
                 if (message.content == "heads" || message.content == 'h') {
