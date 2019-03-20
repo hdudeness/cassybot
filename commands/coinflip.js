@@ -37,14 +37,14 @@ exports.run = (client, message, args) => {
                     },
                     description: "This is one of the many games that I offer! Say '!help' for a complete list all games!",
                     fields: [{
-                        name: "WELCOME TO COINFLIP!",
+                        name: "💰WELCOME TO COINFLIP!💰",
                         value: `This is a simple game that I provide. You will select a bet amount. Then, you will get to guess whether a coin will flip and land on heads or tails. Finally, I will tell you the outcome. If you win you get double your money! If you loss I keep the credits you chose to bet. Good Luck! `,
                         inline: true
                     },
                     {
                         name: "RULES",
                         value: `• DO NOT LEAVE - You cannot dodge your loss
-                                • FOLLOW THE INSTRUCTIONS`,
+                                • FOLLOW THE INSTRUCTIONS - I will guide you every step of the way`,
                         inline: true
                     }, {
                         name: "ENTER A NUMBER FOR YOU BET AMOUNT TO BEGIN:",
@@ -58,11 +58,11 @@ exports.run = (client, message, args) => {
             betCollector.on('collect', message => {
                 if (message.content == 0 || message.content < 0) {
                     betCollector.stop(["Incorrect user syntax."])
-                    return message.reply(`your bet must be greater than zero! Run !coinflip again.`);
+                    return message.reply(`your bet must be greater than zero! Run **!coinflip** again.`);
                 }
                 else if (isNaN(message.content)) {
                     betCollector.stop(["Incorrect user syntax."])
-                    return message.reply(`that is not a valid number! Run !coinflip again.`);
+                    return message.reply(`that is not a valid number! Run **!coinflip** again.`);
                 }
                 else {
                     bet = parseInt(message.content);
@@ -76,10 +76,17 @@ exports.run = (client, message, args) => {
         else {
             // Get heads or tails
             const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
-            message.channel.send(`Now enter "heads" or "tails"...`);
+            message.channel.send(
+                {
+                    embed: {
+                        color: 0xfcce01, // Changes color of left-side line
+                        description: `Now enter **heads** or **tails**:`
+                    }
+                }
+            );
             console.log(choiceCollector);
             choiceCollector.on('collect', message => {
-                if (message.content == "heads" || message.content == 'h') {
+                if (message.content.toLowerCase() == "heads" || message.content.toLowerCase() == 'h') {
                     userChoice = 'h';
                     choiceCollector.stop(["User picked heads."]);
                     message.reply(`you picked heads. Good luck!`);
@@ -104,52 +111,63 @@ exports.run = (client, message, args) => {
         var coinDecider = getRandomInt(1);
         var win = false;
 
-        if (coinDecider > .5) {
-            message.channel.send(
-                {
-                    embed: {
-                        color: 0xfcce01, // Changes color of left-side line
-                        description: "**HEADS**",
-                        files: [
-                            "./images/heads.jpg" // Image to send
-                        ]
-                    }
-                }
-            );
-        } else {
-            message.channel.send(
-                {
-                    embed: {
-                        color: 0xfcce01, // Changes color of left-side line
-                        description: "**TAILS**",
-                        files: [
-                            "./images/tails.jpg" // Image to send
-                        ]
-                    }
-                }
-            );
-        }
+        message.channel.send({
+            files: [
+                "./images/coinflip.gif" // Image to send
+            ]
+        });
 
         setTimeout(() => {
-            // Heads win
-            if (coinDecider > .5 && userChoice == "h") {
-                win = true;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+
+            if (coinDecider > .5) {
+                message.channel.send(
+                    {
+                        embed: {
+                            color: 0xfcce01, // Changes color of left-side line
+                            description: "**HEADS**",
+                            files: [
+                                "./images/heads.jpg" // Image to send
+                            ]
+                        }
+                    }
+                );
+            } else {
+                message.channel.send(
+                    {
+                        embed: {
+                            color: 0xfcce01, // Changes color of left-side line
+                            description: "**TAILS**",
+                            files: [
+                                "./images/tails.jpg" // Image to send
+                            ]
+                        }
+                    }
+                );
             }
-            // Tails win
-            else if (coinDecider < .5 && userChoice == "t") {
-                win = true;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
-            }
-            // Loss
-            else {
-                win = false;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
-            }
-        }, 1000);
+
+            setTimeout(() => {
+                // Heads win
+                if (coinDecider > .5 && userChoice == "h") {
+                    win = true;
+                    db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+                    message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+                }
+                // Tails win
+                else if (coinDecider < .5 && userChoice == "t") {
+                    win = true;
+                    db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+                    message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+                }
+                // Loss
+                else {
+                    win = false;
+                    db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+                    message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+                }
+            }, 1000);
+        }, 3000);
+
+
 
     }
 
