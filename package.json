@@ -11,6 +11,7 @@
     "discord.io": "^2.5.3",
     "discord.js": "^11.4.2",
     "enmap": "^4.7.1",
+    "expect": "^24.5.0",
     "ffmpeg": "0.0.4",
     "get-youtube-id": "^1.0.1",
     "node-gyp": "^3.8.0",
