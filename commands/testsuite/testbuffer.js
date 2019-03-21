@@ -6,5 +6,5 @@ module.exports = {
     like: false,
     ping: false,
     table: true,
-    leader: false
+    leader: true
 }
