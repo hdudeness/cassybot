@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
 
     message.channel.send({
         embed: {
-            color: 0xd4de65,
+            color: 0x39ff14,
             author: {
                 name: client.user.username + " Leaderboards",
                 icon_url: client.user.avatarURL
@@ -26,21 +26,21 @@ exports.run = (client, message, args) => {
             fields: [{
                 name: "**TOP 10**",
                 value: 
-                `**#1 ${message.author}** - ${currency.credits} credits\n` +
-                `**#2 N/A** - N/A credits\n` +
-                `**#3 N/A** - N/A credits\n` +
-                `**#4 N/A** - N/A credits\n` +
-                `**#5 N/A** - N/A credits\n` +
-                `**#6 N/A** - N/A credits\n` +
-                `**#7 N/A** - N/A credits\n` +
-                `**#8 N/A** - N/A credits\n` +
-                `**#9 N/A** - N/A credits\n` +
-                `**#10 N/A** - N/A credits\n`,
+                `**#1 🥇 ${message.author}** - ${currency.credits} credits!
+                **#2 🥈 N/A** - N/A credits
+                **#3 🥉N/A** - N/A credits
+                **#4 N/A** - N/A credits
+                **#5 N/A** - N/A credits
+                **#6 N/A** - N/A credits
+                **#7 N/A** - N/A credits
+                **#8 N/A** - N/A credits
+                **#9 N/A** - N/A credits
+                **#10 N/A** - N/A credits`,
                 inline: true
             },
             {
                 name: "**YOUR POSITION**",
-                value: `**#1 ${message.author}** - ${currency.credits} credits\n`,
+                value: `**Congratulations! #1 ${message.author}** - ${currency.credits} credits\n`,
                 inline: true
             }],
             timestamp: new Date(),

@@ -87,7 +87,7 @@ client.on('message', message => {
 
         // Run command file
         try {
-            if (message.content == prefix + "blackjack") {
+            if (message.content == prefix + "blackjack" || message.content == prefix + "deal" || message.content == prefix + "shuffle") {
                 let commandFile = require(`./commands/games/${command}.js`);
                 commandFile.run(client, message, args);
             } else {
