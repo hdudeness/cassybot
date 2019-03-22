@@ -54,7 +54,7 @@ client.on('message', message => {
     }
 
     // MUSIC
-    if (ytmessage.startsWith(prefix + "play" || prefix + "leave")) {
+    if (ytmessage.startsWith(prefix + "play") || ytmessage.startsWith(prefix + "leave") || ytmessage.startsWith(prefix + "skip")) {
         try {
             // Search for music commands
             let commandFile = require(`./commands/music/${command}.js`);
