@@ -2,7 +2,7 @@ const deck = require("./deck.js");
 
 exports.run = (client, message, args) => {
     
-    var card = deck.deal();
+    var card = deck.deal(message.author.id);
 
     message.channel.send("Pinging...").then(function(m){
         m.edit(` 🎰 **DEALING** 🎰 ${card}- Took: ${m.createdTimestamp - message.createdTimestamp}ms`)

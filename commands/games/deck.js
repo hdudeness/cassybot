@@ -1,5 +1,5 @@
 class Deck {
-    constructor() {
+    constructor(userid) {
         this.deck = [];
         this.reset();
     }
@@ -32,12 +32,24 @@ class Deck {
 
 }
 
-let cardDeck = new Deck();
+let cardDecks = [];
 
-exports.deal = function(){
-    return cardDeck.deal();
+exports.newDeck = function(userid){
+    cardDecks.push({userid: userid, deck: new Deck()})
 }
 
-exports.shuffle = function(){
-    return cardDeck.shuffle();
+exports.deal = function(userid){
+    for(var i = 0; i < cardDecks.length; i++){
+        if(carDecks[i].userid == userid){
+            return carDecks[i].deck.deal();
+        }
+    }
+}
+
+exports.shuffle = function(deck){
+    for(var i = 0; i < cardDecks.length; i++){
+        if(carDecks[i].userid == userid){
+            return carDecks[i].deck.shuffle();
+        }
+    }
 }
