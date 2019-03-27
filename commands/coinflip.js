@@ -68,6 +68,12 @@ exports.run = (client, message, args) => {
                     bet = parseInt(message.content);
                     betCollector.stop(["Bet recieved."])
                     message.reply(`your bet is **` + bet + ` credits!**`);
+
+                    if (currency.credits < bet) {
+                        message.reply(`you don't have enough credits! You currently have ${currency.credits} credits. Run !coinflip again!`);
+                        return;
+                    }
+
                     betConfirm = true;
                     getUserInput();
                 }
@@ -166,9 +172,6 @@ exports.run = (client, message, args) => {
                 }
             }, 1000);
         }, 3000);
-
-
-
     }
 
     getUserInput();
