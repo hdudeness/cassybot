@@ -20,7 +20,7 @@ exports.run = (client, message, args) => {
             message.reply(`Welcome! I will give you 100 credits to start.`);
             currency = {
                 id: message.author.id,
-                user: message.author.id,
+                user: message.author.username,
                 credits: 100
             }
             client.setCredits.run(currency);
