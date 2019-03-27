@@ -9,7 +9,7 @@ exports.run = (client, message, args) => {
     if (!currency) {
         currency = {
             id: message.author.id,
-            user: message.author.id,
+            user: message.author.username,
             // Starting amount, can be changed freely.
             credits: 100
         }
