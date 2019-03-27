@@ -92,7 +92,7 @@ exports.run = (client, message, args) => {
                     message.reply(`you picked heads. Good luck!`);
                     flipCoin();
                 }
-                else if (message.content == "tails" || message.content == "t") {
+                else if (message.content.toLowerCase() == "tails" || message.content.toLowerCase() == "t") {
                     userChoice = 't';
                     choiceCollector.stop(["User picked tails."]);
                     message.reply(`you picked tails. Good luck!`);
