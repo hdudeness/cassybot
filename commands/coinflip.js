@@ -5,7 +5,7 @@ exports.run = (client, message, args) => {
     const buff = require('./testbuffer.js');
 
     // Credit system
-    let currency = client.getCredits.get(message.author.id);
+    var currency = client.getCredits.get(message.author.id);
     const Database = require("better-sqlite3");
     const db = new Database('./user_data/currency.sqlite');
 
@@ -107,10 +107,10 @@ exports.run = (client, message, args) => {
             console.log(choiceCollector);
             choiceCollector.on('collect', message => {
                 if (message.content.toLowerCase() == "heads" || message.content.toLowerCase() == 'h') {
-                    userChoice = 'h';
+                    userChoice = 'heads';
 
                     // Test if choice value matches user input
-                    if (userChoice == message.content.toLowerCase())
+                    if ((message.content.toLowerCase() == "heads" || "h") && userChoice == "heads")
                         choiceValueTest = true;
                     else
                         choiceValueTest = false;
@@ -120,11 +120,10 @@ exports.run = (client, message, args) => {
                     flipCoin();
                 }
                 else if (message.content.toLowerCase() == "tails" || message.content.toLowerCase() == "t") {
-                    userChoice = 't';
+                    userChoice = 'tails';
 
                     // Test if choice value matches user input
-                    console.log(message.content.toLowerCase());
-                    if (userChoice == message.content.toLowerCase())
+                    if ((message.content.toLowerCase() == "tails" || "t") && userChoice == "tails")
                         choiceValueTest = true;
                     else
                         choiceValueTest = false;
@@ -180,10 +179,10 @@ exports.run = (client, message, args) => {
             }
             setTimeout(() => {
                 // Heads win
-                if (coinDecider > .5 && userChoice == "h")
+                if (coinDecider > .5 && userChoice == "heads")
                     win = true;
                 // Tails win
-                else if (coinDecider < .5 && userChoice == "t")
+                else if (coinDecider < .5 && userChoice == "tails")
                     win = true;
                 // Loss
                 else
@@ -193,6 +192,9 @@ exports.run = (client, message, args) => {
                 message.reply(`you ` + ((win) ? `won ` : `lost `) + `**` + bet + ` credits!** You now have ` + ((win) ? `${currency.credits + bet}` : `${currency.credits - bet}`) + ` credits.`);
 
                 // Check database
+                var newCurrency = client.getCredits.get(message.author.id);
+                if (newCurrency.credits == ((win) ? currency.credits + bet : currency.credits - bet))
+                    dbCheck = true;
 
                 printTests();
             }, 1000);
