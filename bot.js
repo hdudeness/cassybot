@@ -24,7 +24,7 @@ client.on('ready', () => {
     }
 
     // Getters and setters for credits data
-    client.getCredits = sql.prepare("SELECT * FROM currency WHERE id = ?");
+    client.getCredits = sql.prepare("SELECT credits FROM currency WHERE id = ?");
     client.setCredits = sql.prepare("INSERT OR REPLACE INTO currency (id, user, credits) VALUES (@id, @user, @credits);");
 
     // Logging in
