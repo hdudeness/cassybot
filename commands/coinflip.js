@@ -9,6 +9,12 @@ exports.run = (client, message, args) => {
     const Database = require("better-sqlite3");
     const db = new Database('./user_data/currency.sqlite');
 
+    // Testing variables
+    var betValueTest = false;
+    var choiceValueTest = false;
+    var dbCheck = false;
+
+
     // getUserInput variables
     var betConfirm = false;
     var userChoice = 'h';
@@ -57,19 +63,27 @@ exports.run = (client, message, args) => {
             console.log(betCollector);
             betCollector.on('collect', message => {
                 if (message.content == 0 || message.content < 0) {
-                    betCollector.stop(["Incorrect user syntax."])
+                    betCollector.stop([console.log("Incorrect user syntax.")])
                     return message.reply(`your bet must be greater than zero! Run **!coinflip** again.`);
                 }
                 else if (isNaN(message.content)) {
-                    betCollector.stop(["Incorrect user syntax."])
+                    betCollector.stop([console.log("Incorrect user syntax.")])
                     return message.reply(`that is not a valid number! Run **!coinflip** again.`);
                 }
                 else {
                     bet = parseInt(message.content);
-                    betCollector.stop(["Bet recieved."])
+
+                    // Test if stored bet amount matches user input
+                    if (bet == message.content)
+                        betValueTest = true;
+                    else
+                        betValueTest = false;
+
+                    betCollector.stop([console.log("Bet recieved.")])
                     message.reply(`your bet is **` + bet + ` credits!**`);
 
                     if (currency.credits < bet) {
+                        betCollector.stop(console.log("Not enough user credits."))
                         message.reply(`you don't have enough credits! You currently have ${currency.credits} credits. Run !coinflip again!`);
                         return;
                     }
@@ -94,18 +108,34 @@ exports.run = (client, message, args) => {
             choiceCollector.on('collect', message => {
                 if (message.content.toLowerCase() == "heads" || message.content.toLowerCase() == 'h') {
                     userChoice = 'h';
-                    choiceCollector.stop(["User picked heads."]);
+
+                    // Test if choice value matches user input
+                    if (userChoice == message.content.toLowerCase())
+                        choiceValueTest = true;
+                    else
+                        choiceValueTest = false;
+
+                    choiceCollector.stop([console.log("User picked heads.")]);
                     message.reply(`you picked heads. Good luck!`);
                     flipCoin();
                 }
                 else if (message.content.toLowerCase() == "tails" || message.content.toLowerCase() == "t") {
                     userChoice = 't';
-                    choiceCollector.stop(["User picked tails."]);
+
+                    // Test if choice value matches user input
+                    console.log(message.content.toLowerCase());
+                    if (userChoice == message.content.toLowerCase())
+                        choiceValueTest = true;
+                    else
+                        choiceValueTest = false;
+
+                    choiceCollector.stop([console.log("User picked tails.")]);
                     message.reply(`you picked tails. Good luck!`);
                     flipCoin();
                 }
                 else {
-                    choiceCollector.stop(["Incorrect user syntax."])
+                    choiceSyntaxTest = true;
+                    choiceCollector.stop([console.log("Incorrect user syntax.")])
                     return message.reply(`try saying "heads" or "tails"! Run !coinflip again.`);
                 }
             })
@@ -122,9 +152,7 @@ exports.run = (client, message, args) => {
                 "./images/coinflip.gif" // Image to send
             ]
         });
-
         setTimeout(() => {
-
             if (coinDecider > .5) {
                 message.channel.send(
                     {
@@ -150,28 +178,31 @@ exports.run = (client, message, args) => {
                     }
                 );
             }
-
             setTimeout(() => {
                 // Heads win
-                if (coinDecider > .5 && userChoice == "h") {
+                if (coinDecider > .5 && userChoice == "h")
                     win = true;
-                    db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                    message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
-                }
                 // Tails win
-                else if (coinDecider < .5 && userChoice == "t") {
+                else if (coinDecider < .5 && userChoice == "t")
                     win = true;
-                    db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                    message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
-                }
                 // Loss
-                else {
+                else
                     win = false;
-                    db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                    message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
-                }
+                // Update database
+                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+                message.reply(`you ` + ((win) ? `won ` : `lost `) + `**` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+                printTests();
             }, 1000);
         }, 3000);
+    }
+    
+    function printTests() {
+        console.log("\n");
+        console.log("******COINFLIP TESTS******");
+        console.log("betValueTest: " + ((betValueTest) ? "PASSED" : "FAILED"));
+        console.log("choiceValueTest: " + ((choiceValueTest) ? "PASSED" : "FAILED"));
+        console.log("dbCheck: " + ((dbCheck) ? "PASSED" : "FAILED"));
+        console.log("\n");
     }
 
     getUserInput();
