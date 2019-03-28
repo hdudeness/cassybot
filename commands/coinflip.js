@@ -190,12 +190,15 @@ exports.run = (client, message, args) => {
                     win = false;
                 // Update database
                 db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you ` + ((win) ? `won ` : `lost `) + `**` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+                message.reply(`you ` + ((win) ? `won ` : `lost `) + `**` + bet + ` credits!** You now have ` + ((win) ? `${currency.credits + bet}` : `${currency.credits - bet}`) + ` credits.`);
+
+                // Check database
+
                 printTests();
             }, 1000);
         }, 3000);
     }
-    
+
     function printTests() {
         console.log("\n");
         console.log("******COINFLIP TESTS******");
