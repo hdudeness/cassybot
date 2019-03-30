@@ -32,24 +32,33 @@ class Deck {
 
 }
 
-let cardDecks = [];
+let cardDeck = new Deck();
 
-exports.newDeck = function(userid){
-    cardDecks.push({userid: userid, deck: new Deck()})
+exports.deal = function(){
+    return cardDeck.deal();
 }
 
-exports.deal = function(userid){
-    for(var i = 0; i < cardDecks.length; i++){
-        if(carDecks[i].userid == userid){
-            return carDecks[i].deck.deal();
-        }
-    }
+exports.shuffle = function(){
+    return cardDeck.shuffle();
 }
+// let cardDecks = [];
 
-exports.shuffle = function(deck){
-    for(var i = 0; i < cardDecks.length; i++){
-        if(carDecks[i].userid == userid){
-            return carDecks[i].deck.shuffle();
-        }
-    }
-}
+// exports.newDeck = function(userid){
+//     cardDecks.push({userid: userid, deck: new Deck()})
+// }
+
+// exports.deal = function(userid){
+//     for(var i = 0; i < cardDecks.length; i++){
+//         if(carDecks[i].userid == userid){
+//             return carDecks[i].deck.deal();
+//         }
+//     }
+// }
+
+// exports.shuffle = function(deck){
+//     for(var i = 0; i < cardDecks.length; i++){
+//         if(carDecks[i].userid == userid){
+//             return carDecks[i].deck.shuffle();
+//         }
+//     }
+// }

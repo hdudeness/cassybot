@@ -1,9 +1,10 @@
 const deck = require("./deck.js");
+
 exports.run = (client, message, args) => {
 
     // General setup
     const Discord = require("discord.js");
-    
+
 
     // Credit system
     let currency = client.getCredits.get(message.author.id);
@@ -75,12 +76,39 @@ exports.run = (client, message, args) => {
             })
         }
         else {
+
+            deck.shuffle()
+
+            var dealerFirstCard = deck.deal();
+            var dealerSecondCard = deck.deal();
+
+            message.channel.send(
+                `Dealer's Card: -> ${dealerSecondCard}`
+
+            )
+
+            // PRINT CARDS 
+            var firstCard = deck.deal();
+            arr.push(firstCard);
+
+            message.channel.send(
+                ` ${firstCard}`
+            )
+
+
+            var secondCard = deck.deal();
+            arr.push(secondCard);
+            message.channel.send(
+                ` ${secondCard}`
+
+            )
+
             // Get heads or tails
             const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
             message.channel.send(
                 {
                     embed: {
-                        color: 0xfcce01, // Changes color of left-side line
+                        color: 0x000000, // Changes color of left-side line
                         description: `Now enter **hit** or **stand**:`
                     }
                 }
@@ -91,13 +119,13 @@ exports.run = (client, message, args) => {
                     userChoice = 'h';
                     choiceCollector.stop(["User picked hit."]);
                     message.reply(`you picked hit. Good luck!`);
-                    blackjackGame();
+                    hit();
                 }
                 else if (message.content.toLowerCase() == "stand" || message.content.toLowerCase() == "s") {
                     userChoice = 't';
                     choiceCollector.stop(["User picked stand."]);
                     message.reply(`you picked stand. Good luck!`);
-                    blackjackGame();
+                    stand();
                 }
                 else {
                     choiceCollector.stop(["Incorrect user syntax."])
@@ -107,76 +135,100 @@ exports.run = (client, message, args) => {
         }
     }
 
-    // Get outcome, take/give credits based on user choice.
-    function blackjackGame() {
-        var coinDecider = getRandomInt(1);
-        var win = false;
+    var arr = [];
+    var total = 0;
 
-        // message.channel.send({
-        //     files: [
-        //         "./images/coinflip.gif" // Image to send
-        //     ]
-        // });
 
-        // setTimeout(() => {
 
-        //     if (coinDecider > .5) {
-        //         message.channel.send(
-        //             {
-        //                 embed: {
-        //                     color: 0xfcce01, // Changes color of left-side line
-        //                     description: "**HEADS**",
-        //                     files: [
-        //                         "./images/heads.jpg" // Image to send
-        //                     ]
-        //                 }
-        //             }
-        //         );
-        //     } else {
-        //         message.channel.send(
-        //             {
-        //                 embed: {
-        //                     color: 0xfcce01, // Changes color of left-side line
-        //                     description: "**TAILS**",
-        //                     files: [
-        //                         "./images/tails.jpg" // Image to send
-        //                     ]
-        //                 }
-        //             }
-        //         );
-        //     }
+    function hit() {
 
-        setTimeout(() => {
-            // Heads win
-            if (coinDecider > .5 && userChoice == "h") {
-                win = true;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        var newCard = deck.deal();
+        arr.push(newCard);
+
+        message.channel.send(`Your Hand:`);
+
+        total = 0;
+        for (i = 0; i < arr.length; i++) {
+            var card = arr[i];
+
+            var num = card.substring(0, 2);
+            num = num.trim();
+            console.log(num);
+            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                num = 10;
+            } else if (num == 'Ac') {
+                if (total <= 10) {
+                    num = 11;
+                } else {
+                    num = 1;
+                }
             }
-            // Tails win
-            else if (coinDecider < .5 && userChoice == "t") {
-                win = true;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+            console.log(total);
+            total += parseInt(num, 10);
+
+            message.channel.send(
+                `${card}`)
+        }
+
+        message.channel.send(`Total: ${total}`);
+
+        if (total > 21) {
+            message.channel.send(`Busted`);
+            return;
+        }
+
+        const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
+        message.channel.send(
+            {
+                embed: {
+                    color: 0x000000, // Changes color of left-side line
+                    description: `Now enter **hit** or **stand**:`
+                }
             }
-            // Loss
+        );
+        console.log(choiceCollector);
+        choiceCollector.on('collect', message => {
+            if (message.content.toLowerCase() == "hit" || message.content.toLowerCase() == 'h') {
+                userChoice = 'h';
+                choiceCollector.stop(["User picked hit."]);
+                message.reply(`you picked hit. Good luck!`);
+                hit();
+            }
+            else if (message.content.toLowerCase() == "stand" || message.content.toLowerCase() == "s") {
+                userChoice = 't';
+                choiceCollector.stop(["User picked stand."]);
+                message.reply(`you picked stand. Good luck!`);
+                stand();
+            }
             else {
-                win = false;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+                choiceCollector.stop(["Incorrect user syntax."])
+                return message.reply(`try saying "hit" or "stand"! Run !blackjack again.`);
             }
-        }, 1000);
-        // } , 3000);
+        })
 
+    }
 
-
+    function stand() {
+        // if (coinDecider > .5 && userChoice == "h") {
+        //     win = true;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        // }
+        // // Tails win
+        // else if (coinDecider < .5 && userChoice == "t") {
+        //     win = true;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        // }
+        // // Loss
+        // else {
+        //     win = false;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+        // }
     }
 
     getUserInput();
 }
 
-// Returns Random Number 0 - Max
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max + 1));
-}
 config: { }
