@@ -29,12 +29,8 @@ exports.run = (client, message, args) => {
             })
         }
         else {
-            message.reply('now enter "heads", or "tails"!');
+            choiceSend();
         }
-    }
-
-    function choiceSend() {
-
     }
 
     // This is the "user"
@@ -43,6 +39,12 @@ exports.run = (client, message, args) => {
         betConfirm = true;
     }
 
+    // "Bot"
+    function choiceSend() {
+        message.reply('now enter "heads", or "tails"!');
+    }
+
+    // "User"
     function choiceReply() {
         
     }
