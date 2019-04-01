@@ -34,6 +34,18 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
+    var currency = client.getCredits.get(message.author.id);
+
+    if (!currency) {
+        message.reply("welcome to the casino! I will give you 100 credits to start.")
+        currency = {
+            id: message.author.id,
+            user: message.author.username,
+            // Starting amount, can be changed freely.
+            credits: 100
+        }
+        client.setCredits.run(currency);
+    }
 
     // Music Arguments
     const member = message.member;
