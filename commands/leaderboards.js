@@ -1,4 +1,6 @@
 const buff = require('./testbuffer.js');
+const Database = require("better-sqlite3");
+const db = new Database('./user_data/currency.sqlite');
 
 exports.run = (client, message, args) => {
     
@@ -14,7 +16,19 @@ exports.run = (client, message, args) => {
         }
         client.setCredits.run(currency);
     }
-
+    var leaders = db.prepare("SELECT user, credits FROM currency ORDER BY credits DESC LIMIT 10");
+    var users = db.prepare("SELECT id, user, credits FROM currency ORDER BY credits DESC");
+ 
+    var temp = leaders.all();
+    var user = users.all();
+    var index;
+    for(var i = 0; i < user.length; i++){
+        if(user[i].id == message.author.id){
+            index = i;
+            break;
+        }
+    }
+    console.log(index);
     message.channel.send({
         embed: {
             color: 0x39ff14,
@@ -26,21 +40,21 @@ exports.run = (client, message, args) => {
             fields: [{
                 name: "**TOP 10**",
                 value: 
-                `**#1 🥇 ${message.author}** - ${currency.credits} credits!
-                **#2 🥈 N/A** - N/A credits
-                **#3 🥉N/A** - N/A credits
-                **#4 N/A** - N/A credits
-                **#5 N/A** - N/A credits
-                **#6 N/A** - N/A credits
-                **#7 N/A** - N/A credits
-                **#8 N/A** - N/A credits
-                **#9 N/A** - N/A credits
-                **#10 N/A** - N/A credits`,
+                `**#1 🥇 ${(temp.length >=  1) ? temp[0].user: "N/A"}** - ${(temp.length >=  1) ? temp[0].credits: "N/A"} credits!
+                **#2 🥈 ${(temp.length >=  2) ? temp[1].user: "N/A"}** - ${(temp.length >=  2) ? temp[1].credits: "N/A"} credits!
+                **#3 🥉${(temp.length >=  3) ? temp[2].user: "N/A"}** - ${(temp.length >=  3) ? temp[2].credits: "N/A"} credits!
+                **#4 ${(temp.length >=  4) ? temp[3].user: "N/A"}** - ${(temp.length >=  4) ? temp[3].credits: "N/A"} credits!
+                **#5 ${(temp.length >=  5) ? temp[4].user: "N/A"}** - ${(temp.length >=  5) ? temp[4].credits: "N/A"} credits!
+                **#6 ${(temp.length >=  6) ? temp[5].user: "N/A"}** - ${(temp.length >=  6) ? temp[5].credits: "N/A"} credits!
+                **#7 ${(temp.length >=  7) ? temp[6].user: "N/A"}** - ${(temp.length >=  7) ? temp[6].credits: "N/A"} credits!
+                **#8 ${(temp.length >=  8) ? temp[7].user: "N/A"}** - ${(temp.length >=  8) ? temp[7].credits: "N/A"} credits!
+                **#9 ${(temp.length >=  9) ? temp[8].user: "N/A"}** - ${(temp.length >=  9) ? temp[8].credits: "N/A"} credits!
+                **#10 ${(temp.length >=  10) ? temp[9].user: "N/A"}** - ${(temp.length >=  10) ? temp[9].credits: "NA"} credits!`,
                 inline: true
             },
             {
                 name: "**YOUR POSITION**",
-                value: `**Congratulations! #1 ${message.author}** - ${currency.credits} credits\n`,
+                value: `**#${index+1} ${user[index].user}** - ${user[index].credits} credits\n`,
                 inline: true
             }],
             timestamp: new Date(),
