@@ -19,7 +19,7 @@ exports.run = (client, message, args, userid) => {
     function getUserInput() {
         // Make sure the user is in the database.
         if (!currency) {
-            message.reply(`Welcome! I will give you 100 credits to start.`);
+            message.reply(`welcome! I will give you 100 credits to start.`);
             currency = {
                 id: message.author.id,
                 user: message.author.id,
@@ -60,11 +60,11 @@ exports.run = (client, message, args, userid) => {
             betCollector.on('collect', message => {
                 if (message.content == 0 || message.content < 0) {
                     betCollector.stop(["Incorrect user syntax."])
-                    return message.reply(`your bet must be greater than zero! Run **!coinflip** again.`);
+                    return message.reply(`your bet must be greater than zero! Run **!blackjack** again.`);
                 }
                 else if (isNaN(message.content)) {
                     betCollector.stop(["Incorrect user syntax."])
-                    return message.reply(`that is not a valid number! Run **!coinflip** again.`);
+                    return message.reply(`that is not a valid number! Run **!blackjack** again.`);
                 }
                 else {
                     bet = parseInt(message.content);
