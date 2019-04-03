@@ -3,7 +3,7 @@ const fs = require('fs');
 
 exports.run = async(client, message, args) => {
     
-    // TEST HELP
+    // // TEST HELP
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!help')
     const msg = await message.channel.awaitMessages(msg => message.content.includes("help"), {time: 5000}); 
@@ -28,8 +28,8 @@ exports.run = async(client, message, args) => {
     
     // TEST COINFLIP
     message.channel.send('-------------------------------------------------------')
-    message.channel.send('!coinflip')
-    const msgCoin = await message.channel.awaitMessages(msgCoin => message.content.includes("coinflip"), {time: 5000});
+    message.channel.send('!cointest');
+    const msgCoin = await message.channel.awaitMessages(msgCoin => message.content.includes("cointest"), {time: 15000});
 
     if(!buff.coin){
         console.log(buff.coin)
@@ -110,19 +110,18 @@ exports.run = async(client, message, args) => {
         });
     }
 
-    /*
     // TEST NO COMMAND
-    message.channel.send('-------------------------------------------------------')
-    message.channel.send('!NOTACOMMAND')
-    const msgNa= await message.channel.awaitMessages(msgNa => message.content.includes(""), {time: 5000});
+    // message.channel.send('-------------------------------------------------------')
+    // message.channel.send('!NOTACOMMAND')
+    // const msgNa= await message.channel.awaitMessages(msgNa => message.content.includes(""), {time: 5000});
 
-    if(!buff.na){
-        console.log(buff.na)
-        message.reply('**ERROR**')
-        return;
-    } else {
-        message.channel.send('**Passed**');
-    } */
+    // if(!buff.na){
+    //     console.log(buff.na)
+    //     message.reply('**ERROR**')
+    //     return;
+    // } else {
+    //     message.channel.send('**Passed**');
+    // }
 
     // TEST LEADERBOARDS
     message.channel.send('-------------------------------------------------------')
