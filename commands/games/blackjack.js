@@ -1,6 +1,6 @@
 const deck = require("./deck.js");
 
-exports.run = (client, message, args) => {
+exports.run = (client, message, args, userid) => {
 
     // General setup
     const Discord = require("discord.js");
@@ -77,11 +77,11 @@ exports.run = (client, message, args) => {
         }
         else {
 
-            deck.shuffle()
+            //deck.shuffle()
 
-            var dealerFirstCard = deck.deal();
+            var dealerFirstCard = deck.deal(userid);
             DealerHand.push(dealerFirstCard);
-            var dealerSecondCard = deck.deal();
+            var dealerSecondCard = deck.deal(userid);
             DealerHand.push(dealerSecondCard);
 
             // message.channel.send(
@@ -91,7 +91,7 @@ exports.run = (client, message, args) => {
             CardUp = dealerSecondCard;
 
             // PRINT CARDS 
-            var firstCard = deck.deal();
+            var firstCard = deck.deal(userid);
             arr.push(firstCard);
 
             // message.channel.send(
@@ -99,7 +99,7 @@ exports.run = (client, message, args) => {
             // )
 
 
-            var secondCard = deck.deal();
+            var secondCard = deck.deal(userid);
             arr.push(secondCard);
             // message.channel.send(
             //     ` ${secondCard}`
