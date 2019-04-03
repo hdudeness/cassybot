@@ -1,5 +1,5 @@
 class Deck {
-    constructor() {
+    constructor(userid) {
         this.deck = [];
         this.reset();
     }
