@@ -1,9 +1,10 @@
 const deck = require("./deck.js");
+
 exports.run = (client, message, args) => {
 
     // General setup
     const Discord = require("discord.js");
-    
+
 
     // Credit system
     let currency = client.getCredits.get(message.author.id);
@@ -75,29 +76,106 @@ exports.run = (client, message, args) => {
             })
         }
         else {
-            // Get heads or tails
-            const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
-            message.channel.send(
-                {
-                    embed: {
-                        color: 0xfcce01, // Changes color of left-side line
-                        description: `Now enter **hit** or **stand**:`
+
+            deck.shuffle()
+
+            var dealerFirstCard = deck.deal();
+            DealerHand.push(dealerFirstCard);
+            var dealerSecondCard = deck.deal();
+            DealerHand.push(dealerSecondCard);
+
+            // message.channel.send(
+            //     `Dealer's Card: -> ${dealerSecondCard}`
+
+            // )
+            CardUp = dealerSecondCard;
+
+            // PRINT CARDS 
+            var firstCard = deck.deal();
+            arr.push(firstCard);
+
+            // message.channel.send(
+            //     ` ${firstCard}`
+            // )
+
+
+            var secondCard = deck.deal();
+            arr.push(secondCard);
+            // message.channel.send(
+            //     ` ${secondCard}`
+            // )
+
+            for (i = 0; i < arr.length; i++) {
+                var card = arr[i];
+
+                var num = card.substring(0, 2);
+                num = num.trim();
+                console.log(num);
+                if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                    num = 10;
+                } else if (num == 'Ac') {
+                    if (total <= 10) {
+                        num = 11;
+                    } else {
+                        num = 1;
                     }
                 }
-            );
+                console.log(total);
+                total += parseInt(num, 10);
+
+                // message.channel.send(
+                //     `${card}`)
+            }
+
+            // message.channel.send(`Total: ${total}`);
+
+            var printFormat = arr.join(', ');
+
+            message.channel.send({
+                embed: {
+                    color: 0x000000, // Changes color of left-side line
+                    author: {
+                        name: client.user.username,
+                        icon_url: client.user.avatarURL
+                    },
+                    fields: [{
+                        name: "YOUR HAND",
+                        value: printFormat,
+                        inline: true
+                    },
+                    {
+                        name: "DEALER CARD UP",
+                        value: `${CardUp}`,
+                        inline: true
+                    }, {
+                        name: "NOW ENTER **HIT** OR **STAND**:",
+                        value: `**Total: ${total}**`,
+                        inline: true
+                    },
+                    ]
+                }
+            })
+
+            const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
+            // message.channel.send(
+            //     {
+            //         embed: {
+            //             color: 0x000000, // Changes color of left-side line
+            //             description: `Now enter **hit** or **stand**:`
+            //         }
+            //     }
+            // );
             console.log(choiceCollector);
             choiceCollector.on('collect', message => {
                 if (message.content.toLowerCase() == "hit" || message.content.toLowerCase() == 'h') {
                     userChoice = 'h';
                     choiceCollector.stop(["User picked hit."]);
-                    message.reply(`you picked hit. Good luck!`);
-                    blackjackGame();
+                    hit();
                 }
                 else if (message.content.toLowerCase() == "stand" || message.content.toLowerCase() == "s") {
                     userChoice = 't';
                     choiceCollector.stop(["User picked stand."]);
-                    message.reply(`you picked stand. Good luck!`);
-                    blackjackGame();
+                    stand();
                 }
                 else {
                     choiceCollector.stop(["Incorrect user syntax."])
@@ -107,76 +185,210 @@ exports.run = (client, message, args) => {
         }
     }
 
-    // Get outcome, take/give credits based on user choice.
-    function blackjackGame() {
-        var coinDecider = getRandomInt(1);
-        var win = false;
+    var arr = [];
+    var DealerHand = [];
+    var total = 0;
+    var CardUp;
 
-        // message.channel.send({
-        //     files: [
-        //         "./images/coinflip.gif" // Image to send
-        //     ]
-        // });
 
-        // setTimeout(() => {
+    // ---------------------- HIT -------------------------
+    function hit() {
 
-        //     if (coinDecider > .5) {
-        //         message.channel.send(
-        //             {
-        //                 embed: {
-        //                     color: 0xfcce01, // Changes color of left-side line
-        //                     description: "**HEADS**",
-        //                     files: [
-        //                         "./images/heads.jpg" // Image to send
-        //                     ]
-        //                 }
-        //             }
-        //         );
-        //     } else {
-        //         message.channel.send(
-        //             {
-        //                 embed: {
-        //                     color: 0xfcce01, // Changes color of left-side line
-        //                     description: "**TAILS**",
-        //                     files: [
-        //                         "./images/tails.jpg" // Image to send
-        //                     ]
-        //                 }
-        //             }
-        //         );
+        var newCard = deck.deal();
+        arr.push(newCard);
+
+        // message.channel.send(`Your Hand:`);
+
+        total = 0;
+        for (i = 0; i < arr.length; i++) {
+            var card = arr[i];
+
+            var num = card.substring(0, 2);
+            num = num.trim();
+            console.log(num);
+            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                num = 10;
+            } else if (num == 'Ac') {
+                if (total <= 10) {
+                    num = 11;
+                } else {
+                    num = 1;
+                }
+            }
+            console.log(total);
+            total += parseInt(num, 10);
+
+            // message.channel.send(
+            //     `${card}`)
+        }
+
+        // message.channel.send(`Total: ${total}`);
+        var printFormat = arr.join(', ');
+
+        message.channel.send({
+            embed: {
+                color: 0x000000, // Changes color of left-side line
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                fields: [{
+                    name: "YOUR HAND",
+                    value: printFormat,
+                    inline: true
+                },
+                {
+                    name: "DEALER CARD UP",
+                    value: `${CardUp}`,
+                    inline: true
+                }, {
+                    name: "NOW ENTER **HIT** OR **STAND**:",
+                    value: `**Total: ${total}**`,
+                    inline: true
+                },
+                ]
+            }
+        })
+
+        if (total > 21) {
+            message.channel.send(`Busted`);
+            return;
+        }
+
+        const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
+        // message.channel.send(
+        //     {
+        //         embed: {
+        //             color: 0x000000, // Changes color of left-side line
+        //             description: `Now enter **hit** or **stand**:`
+        //         }
         //     }
-
-        setTimeout(() => {
-            // Heads win
-            if (coinDecider > .5 && userChoice == "h") {
-                win = true;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        // );
+        console.log(choiceCollector);
+        choiceCollector.on('collect', message => {
+            if (message.content.toLowerCase() == "hit" || message.content.toLowerCase() == 'h') {
+                userChoice = 'h';
+                choiceCollector.stop(["User picked hit."]);
+                hit();
             }
-            // Tails win
-            else if (coinDecider < .5 && userChoice == "t") {
-                win = true;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+            else if (message.content.toLowerCase() == "stand" || message.content.toLowerCase() == "s") {
+                userChoice = 't';
+                choiceCollector.stop(["User picked stand."]);
+                stand();
             }
-            // Loss
             else {
-                win = false;
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+                choiceCollector.stop(["Incorrect user syntax."])
+                return message.reply(`try saying "hit" or "stand"! Run !blackjack again.`);
             }
-        }, 1000);
-        // } , 3000);
+        })
+
+    }
+
+    // ---------------------- HIT -------------------------
+    function stand() {
+
+        // message.channel.send(`Dealer's Hand:`);
+
+        DealerTotal = 0;
+        for (i = 0; i < DealerHand.length; i++) {
+            var card = DealerHand[i];
+
+            var num = card.substring(0, 2);
+            num = num.trim();
+            console.log(num);
+            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                num = 10;
+            } else if (num == 'Ac') {
+                if (total <= 10) {
+                    num = 11;
+                } else {
+                    num = 1;
+                }
+            }
+            console.log(total);
+            DealerTotal += parseInt(num, 10);
+
+            // message.channel.send(
+            //     `${card}`)
+        }
+
+        while (DealerTotal < 17) {
+            var anotherCard = deck.deal();
+            DealerHand.push(anotherCard);
+
+            var num = anotherCard.substring(0, 2);
+            num = num.trim();
+
+            console.log(num);
+            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                num = 10;
+            } else if (num == 'Ac') {
+                if (total <= 10) {
+                    num = 11;
+                } else {
+                    num = 1;
+                }
+            }
+            console.log(total);
+            DealerTotal += parseInt(num, 10);
+
+            // message.channel.send(
+            //     `${anotherCard}`)
+        }
+
+        var printFormat = arr.join(', ');
+        var printFormatDealer = DealerHand.join(', ');
+        message.channel.send({
+            embed: {
+                color: 0x000000, // Changes color of left-side line
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                fields: [{
+                    name: "YOUR HAND\n",
+                    value: printFormat,
+                    inline: true
+                }, {
+                    name: "YOUR TOTAL\n",
+                    value: total,
+                    inline: true
+                },
+                {
+                    name: "DEALER HAND\n",
+                    value: printFormatDealer,
+                    inline: true
+                }, {
+                    name: "DEALER TOTAL\n",
+                    value: DealerTotal,
+                    inline: true
+                },
+                ]
+            }
+        })
+        // message.channel.send(`Total: ${DealerTotal}`);
 
 
-
+        // if (coinDecider > .5 && userChoice == "h") {
+        //     win = true;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        // }
+        // // Tails win
+        // else if (coinDecider < .5 && userChoice == "t") {
+        //     win = true;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        // }
+        // // Loss
+        // else {
+        //     win = false;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+        // }
     }
 
     getUserInput();
 }
 
-// Returns Random Number 0 - Max
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max + 1));
-}
 config: { }
