@@ -77,7 +77,7 @@ exports.run = (client, message, args, userid) => {
         }
         else {
 
-            //deck.shuffle()
+            deck.shuffle()
 
             var dealerFirstCard = deck.deal(userid);
             DealerHand.push(dealerFirstCard);
