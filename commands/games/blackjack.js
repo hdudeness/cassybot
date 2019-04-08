@@ -1,11 +1,11 @@
-const deck = require("./deck.js");
+const Deck = require("./deck.js");
 
 exports.run = (client, message, args, userid) => {
 
     // General setup
     const Discord = require("discord.js");
-
-
+    const deck = Deck.newDeck();
+    
     // Credit system
     let currency = client.getCredits.get(message.author.id);
     const Database = require("better-sqlite3");
@@ -79,9 +79,9 @@ exports.run = (client, message, args, userid) => {
 
             //deck.shuffle()
 
-            var dealerFirstCard = deck.deal(userid);
+            var dealerFirstCard = deck.deal();
             DealerHand.push(dealerFirstCard);
-            var dealerSecondCard = deck.deal(userid);
+            var dealerSecondCard = deck.deal();
             DealerHand.push(dealerSecondCard);
 
             // message.channel.send(
@@ -91,7 +91,7 @@ exports.run = (client, message, args, userid) => {
             CardUp = dealerSecondCard;
 
             // PRINT CARDS 
-            var firstCard = deck.deal(userid);
+            var firstCard = deck.deal();
             arr.push(firstCard);
 
             // message.channel.send(
@@ -99,7 +99,7 @@ exports.run = (client, message, args, userid) => {
             // )
 
 
-            var secondCard = deck.deal(userid);
+            var secondCard = deck.deal();
             arr.push(secondCard);
             // message.channel.send(
             //     ` ${secondCard}`
