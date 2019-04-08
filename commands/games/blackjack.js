@@ -19,7 +19,7 @@ exports.run = (client, message, args, userid) => {
     function getUserInput() {
         // Make sure the user is in the database.
         if (!currency) {
-            message.reply(`Welcome! I will give you 100 credits to start.`);
+            message.reply(`welcome! I will give you 100 credits to start.`);
             currency = {
                 id: message.author.id,
                 user: message.author.id,
@@ -60,11 +60,11 @@ exports.run = (client, message, args, userid) => {
             betCollector.on('collect', message => {
                 if (message.content == 0 || message.content < 0) {
                     betCollector.stop(["Incorrect user syntax."])
-                    return message.reply(`your bet must be greater than zero! Run **!coinflip** again.`);
+                    return message.reply(`your bet must be greater than zero! Run **!blackjack** again.`);
                 }
                 else if (isNaN(message.content)) {
                     betCollector.stop(["Incorrect user syntax."])
-                    return message.reply(`that is not a valid number! Run **!coinflip** again.`);
+                    return message.reply(`that is not a valid number! Run **!blackjack** again.`);
                 }
                 else {
                     bet = parseInt(message.content);
@@ -77,17 +77,14 @@ exports.run = (client, message, args, userid) => {
         }
         else {
 
-            //deck.shuffle()
+            deck.shuffle()
 
             var dealerFirstCard = deck.deal();
             DealerHand.push(dealerFirstCard);
             var dealerSecondCard = deck.deal();
             DealerHand.push(dealerSecondCard);
 
-            // message.channel.send(
-            //     `Dealer's Card: -> ${dealerSecondCard}`
 
-            // )
             CardUp = dealerSecondCard;
 
             // PRINT CARDS 
@@ -101,9 +98,6 @@ exports.run = (client, message, args, userid) => {
 
             var secondCard = deck.deal();
             arr.push(secondCard);
-            // message.channel.send(
-            //     ` ${secondCard}`
-            // )
 
             for (i = 0; i < arr.length; i++) {
                 var card = arr[i];
@@ -123,11 +117,10 @@ exports.run = (client, message, args, userid) => {
                 console.log(total);
                 total += parseInt(num, 10);
 
-                // message.channel.send(
-                //     `${card}`)
+
             }
 
-            // message.channel.send(`Total: ${total}`);
+
 
             var printFormat = arr.join(', ');
 
@@ -157,14 +150,6 @@ exports.run = (client, message, args, userid) => {
             })
 
             const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
-            // message.channel.send(
-            //     {
-            //         embed: {
-            //             color: 0x000000, // Changes color of left-side line
-            //             description: `Now enter **hit** or **stand**:`
-            //         }
-            //     }
-            // );
             console.log(choiceCollector);
             choiceCollector.on('collect', message => {
                 if (message.content.toLowerCase() == "hit" || message.content.toLowerCase() == 'h') {
@@ -197,9 +182,8 @@ exports.run = (client, message, args, userid) => {
         var newCard = deck.deal();
         arr.push(newCard);
 
-        // message.channel.send(`Your Hand:`);
-
         total = 0;
+
         for (i = 0; i < arr.length; i++) {
             var card = arr[i];
 
@@ -217,12 +201,8 @@ exports.run = (client, message, args, userid) => {
             }
             console.log(total);
             total += parseInt(num, 10);
-
-            // message.channel.send(
-            //     `${card}`)
         }
 
-        // message.channel.send(`Total: ${total}`);
         var printFormat = arr.join(', ');
 
         message.channel.send({
@@ -256,14 +236,7 @@ exports.run = (client, message, args, userid) => {
         }
 
         const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
-        // message.channel.send(
-        //     {
-        //         embed: {
-        //             color: 0x000000, // Changes color of left-side line
-        //             description: `Now enter **hit** or **stand**:`
-        //         }
-        //     }
-        // );
+
         console.log(choiceCollector);
         choiceCollector.on('collect', message => {
             if (message.content.toLowerCase() == "hit" || message.content.toLowerCase() == 'h') {
@@ -287,8 +260,6 @@ exports.run = (client, message, args, userid) => {
     // ---------------------- HIT -------------------------
     function stand() {
 
-        // message.channel.send(`Dealer's Hand:`);
-
         DealerTotal = 0;
         for (i = 0; i < DealerHand.length; i++) {
             var card = DealerHand[i];
@@ -307,9 +278,6 @@ exports.run = (client, message, args, userid) => {
             }
             console.log(total);
             DealerTotal += parseInt(num, 10);
-
-            // message.channel.send(
-            //     `${card}`)
         }
 
         while (DealerTotal < 17) {
@@ -332,8 +300,6 @@ exports.run = (client, message, args, userid) => {
             console.log(total);
             DealerTotal += parseInt(num, 10);
 
-            // message.channel.send(
-            //     `${anotherCard}`)
         }
 
         var printFormat = arr.join(', ');

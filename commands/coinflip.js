@@ -23,7 +23,7 @@ exports.run = (client, message, args) => {
     function getUserInput() {
         // Make sure the user is in the database.
         if (!currency) {
-            message.reply(`Welcome! I will give you 100 credits to start.`);
+            message.reply(`welcome! I will give you 100 credits to start.`);
             currency = {
                 id: message.author.id,
                 user: message.author.username,
