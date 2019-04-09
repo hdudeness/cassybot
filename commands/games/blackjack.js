@@ -77,28 +77,27 @@ exports.run = (client, message, args, userid) => {
         }
         else {
 
+            // Randomly shuffle the deck object
             deck.shuffle()
 
+            // Get the Dealer's first card
             var dealerFirstCard = deck.deal();
             DealerHand.push(dealerFirstCard);
+
+            // Get the Dealer's second card
             var dealerSecondCard = deck.deal();
             DealerHand.push(dealerSecondCard);
 
-
-            CardUp = dealerSecondCard;
+            CardUp = dealerSecondCard; // Show the Dealer's second card
 
             // PRINT CARDS 
             var firstCard = deck.deal();
-            arr.push(firstCard);
-
-            // message.channel.send(
-            //     ` ${firstCard}`
-            // )
-
+            arr.push(firstCard); // Add to hand array
 
             var secondCard = deck.deal();
-            arr.push(secondCard);
+            arr.push(secondCard); // Add to hand array
 
+            // Get total card sum
             for (i = 0; i < arr.length; i++) {
                 var card = arr[i];
 
@@ -116,14 +115,11 @@ exports.run = (client, message, args, userid) => {
                 }
                 console.log(total);
                 total += parseInt(num, 10);
-
-
             }
 
+            var printFormat = arr.join(', '); // Set up print format
 
-
-            var printFormat = arr.join(', ');
-
+            // Send embed ouput
             message.channel.send({
                 embed: {
                     color: 0x000000, // Changes color of left-side line
@@ -149,6 +145,7 @@ exports.run = (client, message, args, userid) => {
                 }
             })
 
+            // Hit or Stand
             const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
             console.log(choiceCollector);
             choiceCollector.on('collect', message => {
@@ -170,20 +167,22 @@ exports.run = (client, message, args, userid) => {
         }
     }
 
-    var arr = [];
-    var DealerHand = [];
-    var total = 0;
-    var CardUp;
-
+    // Storage
+    var arr = []; // Player's Hand
+    var DealerHand = []; // Dealer
+    var total = 0; // Player Card Total
+    var CardUp; // Dealer's Card Facing Up
 
     // ---------------------- HIT -------------------------
     function hit() {
 
+        // Card that Player hit
         var newCard = deck.deal();
-        arr.push(newCard);
+        arr.push(newCard); // Add to Player's Hand
 
-        total = 0;
+        total = 0; // Reset total
 
+        // Get new total
         for (i = 0; i < arr.length; i++) {
             var card = arr[i];
 
@@ -203,8 +202,9 @@ exports.run = (client, message, args, userid) => {
             total += parseInt(num, 10);
         }
 
-        var printFormat = arr.join(', ');
-        
+        var printFormat = arr.join(', '); // format array print
+
+        // If the player did not bust, print embed
         if (total <= 21) {
 
             message.channel.send({
@@ -233,14 +233,14 @@ exports.run = (client, message, args, userid) => {
             })
         }
 
+        // Otherwise, if the player busted, print bust embed and return
         if (total > 21) {
             busted();
-            //message.channel.send(`Busted`);
             return;
         }
 
+        // Hit or Stand
         const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
-
         console.log(choiceCollector);
         choiceCollector.on('collect', message => {
             if (message.content.toLowerCase() == "hit" || message.content.toLowerCase() == 'h') {
@@ -259,15 +259,15 @@ exports.run = (client, message, args, userid) => {
             }
         })
 
-    }
+    } // ---------------------- HIT -------------------------
 
-    // ---------------------- HIT -------------------------
+    // ---------------------- STAND -------------------------
     function stand() {
 
-        DealerTotal = 0;
+        DealerTotal = 0; // Find dealer's total
+
         for (i = 0; i < DealerHand.length; i++) {
             var card = DealerHand[i];
-
             var num = card.substring(0, 2);
             num = num.trim();
             console.log(num);
@@ -284,6 +284,7 @@ exports.run = (client, message, args, userid) => {
             DealerTotal += parseInt(num, 10);
         }
 
+        // Dealer keeps hitting until sum is >= 17
         while (DealerTotal < 17) {
             var anotherCard = deck.deal();
             DealerHand.push(anotherCard);
@@ -303,11 +304,12 @@ exports.run = (client, message, args, userid) => {
             }
             console.log(total);
             DealerTotal += parseInt(num, 10);
-
         }
 
-        var printFormat = arr.join(', ');
-        var printFormatDealer = DealerHand.join(', ');
+        var printFormat = arr.join(', '); // Format print output for array
+        var printFormatDealer = DealerHand.join(', '); // Format print output for array
+
+        // Send hand embed output
         message.channel.send({
             embed: {
                 color: 0x000000, // Changes color of left-side line
@@ -356,54 +358,15 @@ exports.run = (client, message, args, userid) => {
         //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
         //     message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
         // }
-    }
+    } // ---------------------- STAND -------------------------
 
+    // ---------------------- BUST -------------------------
     function busted() {
 
-        DealerTotal = 0;
-        for (i = 0; i < DealerHand.length; i++) {
-            var card = DealerHand[i];
 
-            var num = card.substring(0, 2);
-            num = num.trim();
-            console.log(num);
-            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
-                num = 10;
-            } else if (num == 'Ac') {
-                if (total <= 10) {
-                    num = 11;
-                } else {
-                    num = 1;
-                }
-            }
-            console.log(total);
-            DealerTotal += parseInt(num, 10);
-        }
+        var printFormat = arr.join(', '); // Format array print
 
-        while (DealerTotal < 17) {
-            var anotherCard = deck.deal();
-            DealerHand.push(anotherCard);
-
-            var num = anotherCard.substring(0, 2);
-            num = num.trim();
-
-            console.log(num);
-            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
-                num = 10;
-            } else if (num == 'Ac') {
-                if (total <= 10) {
-                    num = 11;
-                } else {
-                    num = 1;
-                }
-            }
-            console.log(total);
-            DealerTotal += parseInt(num, 10);
-
-        }
-
-        var printFormat = arr.join(', ');
-        var printFormatDealer = DealerHand.join(', ');
+        // Print out busted hand and total
         message.channel.send({
             embed: {
                 color: 0x000000, // Changes color of left-side line
@@ -442,7 +405,7 @@ exports.run = (client, message, args, userid) => {
         //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
         //     message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
         // }
-    }
+    }  // ---------------------- BUST -------------------------
 
     getUserInput();
 }
