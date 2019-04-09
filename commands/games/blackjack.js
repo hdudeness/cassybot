@@ -338,26 +338,24 @@ exports.run = (client, message, args, userid) => {
                 ]
             }
         })
-        // message.channel.send(`Total: ${DealerTotal}`);
 
-
-        // if (coinDecider > .5 && userChoice == "h") {
-        //     win = true;
-        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
-        // }
-        // // Tails win
-        // else if (coinDecider < .5 && userChoice == "t") {
-        //     win = true;
-        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
-        // }
-        // // Loss
-        // else {
-        //     win = false;
-        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-        //     message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
-        // }
+        // Player total is greater than dealer total
+        if (DealerTotal < total || DealerTotal > 21) {
+            win = true; // You win
+            db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+            message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        }
+        // Player total is equal to dealer total
+        else if (DealerTotal == total) {
+            // Push
+            message.reply(`you pushed **` + bet + ` credits!** You still have ${currency.credits} credits.`);
+        }
+        // Player total is less 
+        else {
+            win = false; // You lost
+            db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+            message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+        }
     } // ---------------------- STAND -------------------------
 
     // ---------------------- BUST -------------------------
@@ -385,26 +383,12 @@ exports.run = (client, message, args, userid) => {
                 }]
             }
         })
-        // message.channel.send(`Total: ${DealerTotal}`);
 
+        // Bust Result
+        win = false; // You lost
+        db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
 
-        // if (coinDecider > .5 && userChoice == "h") {
-        //     win = true;
-        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
-        // }
-        // // Tails win
-        // else if (coinDecider < .5 && userChoice == "t") {
-        //     win = true;
-        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
-        // }
-        // // Loss
-        // else {
-        //     win = false;
-        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-        //     message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
-        // }
     }  // ---------------------- BUST -------------------------
 
     getUserInput();
