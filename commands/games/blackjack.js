@@ -5,7 +5,7 @@ exports.run = (client, message, args, userid) => {
     // General setup
     const Discord = require("discord.js");
     const deck = Deck.newDeck();
-    
+
     // Credit system
     let currency = client.getCredits.get(message.author.id);
     const Database = require("better-sqlite3");
@@ -204,34 +204,38 @@ exports.run = (client, message, args, userid) => {
         }
 
         var printFormat = arr.join(', ');
+        
+        if (total <= 21) {
 
-        message.channel.send({
-            embed: {
-                color: 0x000000, // Changes color of left-side line
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                fields: [{
-                    name: "YOUR HAND",
-                    value: printFormat,
-                    inline: true
-                },
-                {
-                    name: "DEALER CARD UP",
-                    value: `${CardUp}`,
-                    inline: true
-                }, {
-                    name: "NOW ENTER **HIT** OR **STAND**:",
-                    value: `**Total: ${total}**`,
-                    inline: true
-                },
-                ]
-            }
-        })
+            message.channel.send({
+                embed: {
+                    color: 0x000000, // Changes color of left-side line
+                    author: {
+                        name: client.user.username,
+                        icon_url: client.user.avatarURL
+                    },
+                    fields: [{
+                        name: "YOUR HAND",
+                        value: printFormat,
+                        inline: true
+                    },
+                    {
+                        name: "DEALER CARD UP",
+                        value: `${CardUp}`,
+                        inline: true
+                    }, {
+                        name: "NOW ENTER **HIT** OR **STAND**:",
+                        value: `**Total: ${total}**`,
+                        inline: true
+                    },
+                    ]
+                }
+            })
+        }
 
         if (total > 21) {
-            message.channel.send(`Busted`);
+            busted();
+            //message.channel.send(`Busted`);
             return;
         }
 
@@ -330,6 +334,92 @@ exports.run = (client, message, args, userid) => {
                     inline: true
                 },
                 ]
+            }
+        })
+        // message.channel.send(`Total: ${DealerTotal}`);
+
+
+        // if (coinDecider > .5 && userChoice == "h") {
+        //     win = true;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        // }
+        // // Tails win
+        // else if (coinDecider < .5 && userChoice == "t") {
+        //     win = true;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you won **` + bet + ` credits!** You now have ${currency.credits + bet} credits.`);
+        // }
+        // // Loss
+        // else {
+        //     win = false;
+        //     db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+        //     message.reply(`you lost **` + bet + ` credits!** You now have ${currency.credits - bet} credits.`);
+        // }
+    }
+
+    function busted() {
+
+        DealerTotal = 0;
+        for (i = 0; i < DealerHand.length; i++) {
+            var card = DealerHand[i];
+
+            var num = card.substring(0, 2);
+            num = num.trim();
+            console.log(num);
+            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                num = 10;
+            } else if (num == 'Ac') {
+                if (total <= 10) {
+                    num = 11;
+                } else {
+                    num = 1;
+                }
+            }
+            console.log(total);
+            DealerTotal += parseInt(num, 10);
+        }
+
+        while (DealerTotal < 17) {
+            var anotherCard = deck.deal();
+            DealerHand.push(anotherCard);
+
+            var num = anotherCard.substring(0, 2);
+            num = num.trim();
+
+            console.log(num);
+            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                num = 10;
+            } else if (num == 'Ac') {
+                if (total <= 10) {
+                    num = 11;
+                } else {
+                    num = 1;
+                }
+            }
+            console.log(total);
+            DealerTotal += parseInt(num, 10);
+
+        }
+
+        var printFormat = arr.join(', ');
+        var printFormatDealer = DealerHand.join(', ');
+        message.channel.send({
+            embed: {
+                color: 0x000000, // Changes color of left-side line
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                fields: [{
+                    name: "YOUR HAND\n",
+                    value: printFormat,
+                    inline: true
+                }, {
+                    name: "YOUR TOTAL (**BUSTED**)\n",
+                    value: total,
+                    inline: true
+                }]
             }
         })
         // message.channel.send(`Total: ${DealerTotal}`);
