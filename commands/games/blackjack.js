@@ -40,7 +40,7 @@ exports.run = (client, message, args, userid) => {
                     description: "This is one of the many games that I offer! Say '!help' for a complete list all games!",
                     fields: [{
                         name: "🃏WELCOME TO BLACKJACK!🃏",
-                        value: `This is ... You will select a bet amount. Then, ... Finally, ... If you win ..! If you lose ... Good Luck! `,
+                        value: `This is a common casino game that I provide. You will select a bet amount. Then, I will show you the hand that you have been dealt and the dealer's card up. Finally, you can choose to keep hitting or stand. If you win, you will get twice your bet amount! If you lose, I get to keep your bet. Good Luck! `,
                         inline: true
                     },
                     {
