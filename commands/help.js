@@ -12,18 +12,22 @@ exports.run = (client, message, args) => {
             fields: [{
                 name: "**ALL COMMANDS**",
                 value: '**!help** - This command. \n' +
-                    '**!credits** - Displays user\'s credits.\n' +
+                    '**!credits** - Displays the user\'s credits.\n' +
                     '**!ping** - Pong\n' +
                     '**!coinflip** - Flips a coin... Heads or Tails?\n' +
-                    '**!leaderboards** - Displays Top 10 and user\'s rank.\n' +
-                    '**!report** [TO DO]\n' +
-                    '**!kick** [TO DO]\n' +
-                    '**!embed** [EDIT] - Template\n',
+                    '**!leaderboards** - Displays the Top 10 and user\'s rank.\n' +
+                    '**!embed** - Template\n' +
+                    `**!play <SONG>** - Plays the audio to the given song. (YouTube URL or song info) \n` +
+                    '**!leave** - Kicks CassyBot from the voice call. \n' +
+                    '**!skip** - Skips the current song. \n',
                 inline: true
             },
             {
                 name: "🎰**GAMES**🎰",
-                value: '**!coinflip** - Flips a coin... Heads or Tails?\n',
+                value: `**!coinflip** - Flips a coin... Heads or Tails?
+                **!blackjack** - Can you get to 21?
+                **!roulette** - Green, Black, or Red?
+                **!slots** - Give her a free roll.`,
                 inline: true
             },
             {
