@@ -139,7 +139,7 @@ exports.run = (client, message, args, userid) => {
                     }, {
                         name: "NOW ENTER **HIT** OR **STAND**:",
                         value: `**Total: ${total}**`,
-                        inline: true
+                        inline: false
                     },
                     ]
                 }
@@ -320,20 +320,20 @@ exports.run = (client, message, args, userid) => {
                 fields: [{
                     name: "YOUR HAND\n",
                     value: printFormat,
-                    inline: true
+                    inline: false
                 }, {
                     name: "YOUR TOTAL\n",
                     value: total,
-                    inline: true
+                    inline: false
                 },
                 {
                     name: "DEALER HAND\n",
                     value: printFormatDealer,
-                    inline: true
+                    inline: false
                 }, {
                     name: "DEALER TOTAL\n",
                     value: DealerTotal,
-                    inline: true
+                    inline: false
                 },
                 ]
             }
@@ -375,11 +375,11 @@ exports.run = (client, message, args, userid) => {
                 fields: [{
                     name: "YOUR HAND\n",
                     value: printFormat,
-                    inline: true
+                    inline: false
                 }, {
                     name: "YOUR TOTAL (**BUSTED**)\n",
                     value: total,
-                    inline: true
+                    inline: false
                 }]
             }
         })
