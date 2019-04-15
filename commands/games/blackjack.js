@@ -100,16 +100,12 @@ exports.run = (client, message, args, userid) => {
             for (i = 0; i < arr.length; i++) {
                 var card = arr[i];
 
-                var num = card.substring(2, 4);
-                var ten = card.substring(2, 5);
-                var numFace = card.substring(2, 3);
+                var num = card.substring(2, 3);
                 num = num.trim();
                 console.log(num);
-                if (ten == '10') {
+                if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                     num = 10;
-                } else if (numFace == 'j' || numFace == 'q' || numFace == 'k') {
-                    num = 10;
-                } else if (numFace == 'a') {
+                } else if (num == 'a') {
                     if (total <= 10) {
                         num = 11;
                     } else {
@@ -189,16 +185,14 @@ exports.run = (client, message, args, userid) => {
         for (i = 0; i < arr.length; i++) {
             var card = arr[i];
 
-            var num = card.substring(2, 4);
-            var ten = card.substring(2, 5);
-            var numFace = card.substring(2, 3);
+            var num = card.substring(2, 3);
             num = num.trim();
             console.log(num);
             if (ten == '10') {
                 num = 10;
-            } else if (numFace == 'j' || numFace == 'q' || numFace == 'k') {
+            } else if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                 num = 10;
-            } else if (numFace == 'a') {
+            } else if (num == 'a') {
                 if (total <= 10) {
                     num = 11;
                 } else {
@@ -278,7 +272,7 @@ exports.run = (client, message, args, userid) => {
             var num = card.substring(2, 3);
             num = num.trim();
             console.log(num);
-            if (num == 'j' || num == 'q' || num == 'k') {
+            if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                 num = 10;
             } else if (num == 'a') {
                 if (total <= 10) {
@@ -300,7 +294,7 @@ exports.run = (client, message, args, userid) => {
             num = num.trim();
 
             console.log(num);
-            if (num == 'j' || num == 'q' || num == 'k') {
+            if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                 num = 10;
             } else if (num == 'a') {
                 if (total <= 10) {
