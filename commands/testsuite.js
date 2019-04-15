@@ -25,6 +25,29 @@ exports.run = async(client, message, args) => {
             }
         });
     }
+
+    // TEST BLACKJACK
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!blackjacktest');
+    const msgBlackjack = await message.channel.awaitMessages(msgBlackjack => message.content.includes("blackjacktest"), {time: 15000});
+
+    if(!buff.blackjack){
+        console.log(buff.blackjack)
+        message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Blackjack - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+        return;
+    } else {
+        message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Blackjack - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+    }
     
     // TEST COINFLIP
     message.channel.send('-------------------------------------------------------')
