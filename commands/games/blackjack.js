@@ -188,9 +188,7 @@ exports.run = (client, message, args, userid) => {
             var num = card.substring(2, 3);
             num = num.trim();
             console.log(num);
-            if (ten == '10') {
-                num = 10;
-            } else if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
+            if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                 num = 10;
             } else if (num == 'a') {
                 if (total <= 10) {
