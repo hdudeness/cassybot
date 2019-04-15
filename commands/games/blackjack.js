@@ -13,7 +13,6 @@ exports.run = (client, message, args, userid) => {
 
     // getUserInput variables
     var betConfirm = false;
-    var userChoice = 'h';
     var bet = 1;
 
     function getUserInput() {
@@ -101,12 +100,12 @@ exports.run = (client, message, args, userid) => {
             for (i = 0; i < arr.length; i++) {
                 var card = arr[i];
 
-                var num = card.substring(0, 2);
+                var num = card.substring(2, 3);
                 num = num.trim();
                 console.log(num);
-                if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                if (num == 'j' || num == 'q' || num == 'k') {
                     num = 10;
-                } else if (num == 'Ac') {
+                } else if (num == 'a') {
                     if (total <= 10) {
                         num = 11;
                     } else {
@@ -186,12 +185,12 @@ exports.run = (client, message, args, userid) => {
         for (i = 0; i < arr.length; i++) {
             var card = arr[i];
 
-            var num = card.substring(0, 2);
+            var num = card.substring(2, 3);
             num = num.trim();
             console.log(num);
-            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+            if (num == 'j' || num == 'q' || num == 'k') {
                 num = 10;
-            } else if (num == 'Ac') {
+            } else if (num == 'a') {
                 if (total <= 10) {
                     num = 11;
                 } else {
@@ -268,12 +267,12 @@ exports.run = (client, message, args, userid) => {
 
         for (i = 0; i < DealerHand.length; i++) {
             var card = DealerHand[i];
-            var num = card.substring(0, 2);
+            var num = card.substring(2, 3);
             num = num.trim();
             console.log(num);
-            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+            if (num == 'j' || num == 'q' || num == 'k') {
                 num = 10;
-            } else if (num == 'Ac') {
+            } else if (num == 'a') {
                 if (total <= 10) {
                     num = 11;
                 } else {
@@ -289,13 +288,13 @@ exports.run = (client, message, args, userid) => {
             var anotherCard = deck.deal();
             DealerHand.push(anotherCard);
 
-            var num = anotherCard.substring(0, 2);
+            var num = anotherCard.substring(2, 3);
             num = num.trim();
 
             console.log(num);
-            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+            if (num == 'j' || num == 'q' || num == 'k') {
                 num = 10;
-            } else if (num == 'Ac') {
+            } else if (num == 'a') {
                 if (total <= 10) {
                     num = 11;
                 } else {
