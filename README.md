@@ -94,25 +94,11 @@ Additional help and images can be found here: https://www.digitaltrends.com/gami
 
 To run automated tests for this system, simply run the !testsuite command.
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
+
 
 ## Built With -- Dependency Versions
 
