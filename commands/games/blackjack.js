@@ -116,7 +116,7 @@ exports.run = (client, message, args, userid) => {
                 total += parseInt(num, 10);
             }
 
-            var printFormat = arr.join(', '); // Set up print format
+            var printFormat = arr.join(''); // Set up print format
 
             // Send embed ouput
             message.channel.send({
@@ -201,7 +201,7 @@ exports.run = (client, message, args, userid) => {
             total += parseInt(num, 10);
         }
 
-        var printFormat = arr.join(', '); // format array print
+        var printFormat = arr.join(''); // format array print
 
         // If the player did not bust, print embed
         if (total <= 21) {
