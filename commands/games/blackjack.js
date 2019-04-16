@@ -305,8 +305,8 @@ exports.run = (client, message, args, userid) => {
             DealerTotal += parseInt(num, 10);
         }
 
-        var printFormat = arr.join(', '); // Format print output for array
-        var printFormatDealer = DealerHand.join(', '); // Format print output for array
+        var printFormat = arr.join(''); // Format print output for array
+        var printFormatDealer = DealerHand.join(''); // Format print output for array
 
         // Send hand embed output
         message.channel.send({
