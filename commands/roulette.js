@@ -38,17 +38,10 @@ exports.run = (client, message, args) => {
                         inline: true
                     },
                     {
-<<<<<<< HEAD
                         name: "WINNINGS",
                         value: `The amount you win when your guess is correct depends on what color you pick
                                 **RED** and **Black** win your bet amount
                                 **GREEN** wins you big with 36X your bet amount`,
-=======
-                        name: "WININGS",
-                        value: `The amount you win when your guess is correct depends on what color you pick:
-                                **RED** and **Black** win your bet amount!
-                                **GREEN** rewards you big with 36X your bet amount!`,
->>>>>>> 110f6cb0e39daba7e3aaeb63d7b40b4fea3fafab
                         inline: true
                     },
                     {
