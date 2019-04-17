@@ -125,7 +125,7 @@ exports.run = (client, message, args) => {
 
                     choiceCollector.stop([console.log("User picked red.")]);
                     message.reply(`you picked red. Good luck!`);
-                    flipCoin();
+                    spinWheel();
                 }
                 else if (message.content.toLowerCase() == "black" || message.content.toLowerCase() == "b") {
                     userChoice = 'black';
@@ -138,7 +138,7 @@ exports.run = (client, message, args) => {
 
                     choiceCollector.stop([console.log("User picked black.")]);
                     message.reply(`you picked black. Good luck!`);
-                    flipCoin();
+                    spinWheel();
                 }
                 else if (message.content.toLowerCase() == "green" || message.content.toLowerCase() == "g") {
                     userChoice = 'green';
@@ -214,14 +214,14 @@ exports.run = (client, message, args) => {
                     message.reply(`you won ** ${bet*16} credits!** You now have ${(currency.credits + bet*36)} credits.`);
                 }
                 // red win
-                else if (wheelSlot >= 1 && coinDecider <= 16 && wheelSlot == "red"){
+                else if (wheelSlot >= 1 && wheelSlot <= 16 && userChoice == "red"){
                     win = true;
                     // Update database
                     db.exec("UPDATE currency SET credits = credits + " + bet + " WHERE id = " + message.author.id + ";");
                     message.reply(`you won ** ${bet} credits!** You now have ${currency.credits + bet} credits.`);
                 }
                 // black win
-                else if (wheelSlot >= 17 && wheelSlot <= 36 && wheelSlot == "black"){
+                else if (wheelSlot >= 17 && wheelSlot <= 36 && userChoice == "black"){
                     win = true;
                     // Update database
                     db.exec("UPDATE currency SET credits = credits + " + bet + " WHERE id = " + message.author.id + ";");
