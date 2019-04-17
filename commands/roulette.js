@@ -44,15 +44,14 @@ exports.run = (client, message, args) => {
                     description: "This is one of the many games that I offer! Say '!help' for a complete list all games!",
                     fields: [{
                         name: "💣WELCOME TO ROULETTE!💣",
-                        value: `This is a simple game that I provide. You will select a bet amount and then pick one of three colors
-                                This is a standard 37 slot roulette wheel with 18 Red, 18 Black, and 1 Green spot`,
+                        value: `This is a simple game that I provide. You will select a bet amount and then pick one of three colors. This is a standard 37 slot roulette wheel with 18 Red, 18 Black, and 1 Green spot`,
                         inline: true
                     },
                     {
                         name: "WININGS",
-                        value: `The amount you win when your guess is correct depends on what color you pick
-                                **RED** and **Black** win your bet amount
-                                **GREEN** wins you big with 36X your bet amount`,
+                        value: `The amount you win when your guess is correct depends on what color you pick:
+                                **RED** and **Black** win your bet amount!
+                                **GREEN** rewards you big with 36X your bet amount!`,
                         inline: true
                     },
                     {
