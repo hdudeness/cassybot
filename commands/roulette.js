@@ -36,14 +36,14 @@ exports.run = (client, message, args) => {
             const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
             message.channel.send({
                 embed: {
-                    color: 0xfcce01, // Changes color of left-side line
+                    color: 0xFFA500, // Changes color of left-side line
                     author: {
                         name: client.user.username,
                         icon_url: client.user.avatarURL
                     },
                     description: "This is one of the many games that I offer! Say '!help' for a complete list all games!",
                     fields: [{
-                        name: "💰WELCOME TO ROULETTE!💰",
+                        name: "💣WELCOME TO ROULETTE!💣",
                         value: `This is a simple game that I provide. You will select a bet amount and then pick one of three colors
                                 This is a standard 37 slot roulette wheel with 18 Red, 18 Black, and 1 Green spot`,
                         inline: true
@@ -107,7 +107,7 @@ exports.run = (client, message, args) => {
             message.channel.send(
                 {
                     embed: {
-                        color: 0xfcce01, // Changes color of left-side line
+                        color: 0xFFA500, // Changes color of left-side line
                         description: `Now enter **red** or **black** or **green**:`
                     }
                 }
@@ -177,7 +177,7 @@ exports.run = (client, message, args) => {
                 message.channel.send(
                     {
                         embed: {
-                            color: 0xfcce01, // Changes color of left-side line
+                            color: 0xFFA500, // Changes color of left-side line
                             description: "**GREEN**"
 
                         }
@@ -188,7 +188,7 @@ exports.run = (client, message, args) => {
                 message.channel.send(
                     {
                         embed: {
-                            color: 0xfcce01, // Changes color of left-side line
+                            color: 0xFFA500, // Changes color of left-side line
                             description: "**RED**"
 
                         }
@@ -198,7 +198,7 @@ exports.run = (client, message, args) => {
                 message.channel.send(
                     {
                         embed: {
-                            color: 0xfcce01, // Changes color of left-side line
+                            color: 0xFFA500, // Changes color of left-side line
                             description: "**BLACK**"
 
                         }
