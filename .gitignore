@@ -1,4 +1,7 @@
 git update-index --assume-unchanged ./json/config.json
-# Untracked files:
-#    *.html
-#    *.sqlite
+
+# ignore files that are not json/python
+node_modules/
+user_data/
+lib/
+database_editor/
