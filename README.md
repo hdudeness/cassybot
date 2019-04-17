@@ -45,45 +45,60 @@ How to run media play feature:
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Step by step example on how to get your development environment running:
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+Step 1: Download Nodejs, Set Up a Discord Account, and Set Up FFMPEG
 
 ```
-until finished
+Download Nodejs at nodejs.org and install it (instructions above).
+Create An Account at Discord.com.
+Installing FFMPEG Instructions above.
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Step 2: Create Your Test Bot
+
+```
+To create an application go to discordapp.com/developers/applications/me.
+After logging in, click New Application.
+Give the bot a name and click Save Changes.
+Find your way to the right-hand menu and click Add Bot (it is found under Build-a-bot).
+```
+
+Step 3: Get Your Bot's Authorization Token
+
+```
+In the box marked App Bot User, look for Token: Click to reveal.
+That is your bot's authorization token, DO NOT SHARE IT OR PUSH IT.
+```
+
+Step 4: Send Your Bot to Your Server
+
+```
+The final URL should look like this, but with your client ID number in it instead of this fake one:
+https://discordapp.com/oauth2/authorize?&client_id=000000000000000001&scope=bot&permissions=8
+
+Copy the URL with your client ID number in it into your browser.
+```
+
+Step 5: Set Up Your Editor and Begin!
+
+```
+Install an IDE to edit the JavaScript Files (Visual Studio Code is recommended).
+Finally, go to ./cassybot/json/config.json.
+Open the file and paste your personal token where it says token: "PASTE HERE"
+```
+
+Additional help and images can be found here: https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+To run automated tests for this system, simply run the !testsuite command.
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
+
 
 ## Built With -- Dependency Versions
 

@@ -1,0 +1,4 @@
+git update-index --assume-unchanged ./json/config.json
+# Untracked files:
+#    *.html
+#    *.sqlite

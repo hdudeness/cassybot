@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
 	"token": "NTQ3MTE2Mjk3ODQ3MDQ2MTgw.D30_rg.DEILWJep0L-e0ivQqZXxc9sERdk",
+=======
+	"token": "",
+>>>>>>> 7b2f7d66d34496bf7e43ff5eed65390f07133915
 	"prefix": "!",
 	"clientID": "YOUR_CLIENT_ID",
 	"language": "en",

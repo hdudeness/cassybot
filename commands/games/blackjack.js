@@ -13,7 +13,6 @@ exports.run = (client, message, args, userid) => {
 
     // getUserInput variables
     var betConfirm = false;
-    var userChoice = 'h';
     var bet = 1;
 
     function getUserInput() {
@@ -101,12 +100,12 @@ exports.run = (client, message, args, userid) => {
             for (i = 0; i < arr.length; i++) {
                 var card = arr[i];
 
-                var num = card.substring(0, 2);
+                var num = card.substring(2, 3);
                 num = num.trim();
                 console.log(num);
-                if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+                if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                     num = 10;
-                } else if (num == 'Ac') {
+                } else if (num == 'a') {
                     if (total <= 10) {
                         num = 11;
                     } else {
@@ -117,7 +116,7 @@ exports.run = (client, message, args, userid) => {
                 total += parseInt(num, 10);
             }
 
-            var printFormat = arr.join(', '); // Set up print format
+            var printFormat = arr.join(''); // Set up print format
 
             // Send embed ouput
             message.channel.send({
@@ -139,7 +138,7 @@ exports.run = (client, message, args, userid) => {
                     }, {
                         name: "NOW ENTER **HIT** OR **STAND**:",
                         value: `**Total: ${total}**`,
-                        inline: true
+                        inline: false
                     },
                     ]
                 }
@@ -186,12 +185,12 @@ exports.run = (client, message, args, userid) => {
         for (i = 0; i < arr.length; i++) {
             var card = arr[i];
 
-            var num = card.substring(0, 2);
+            var num = card.substring(2, 3);
             num = num.trim();
             console.log(num);
-            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+            if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                 num = 10;
-            } else if (num == 'Ac') {
+            } else if (num == 'a') {
                 if (total <= 10) {
                     num = 11;
                 } else {
@@ -202,7 +201,7 @@ exports.run = (client, message, args, userid) => {
             total += parseInt(num, 10);
         }
 
-        var printFormat = arr.join(', '); // format array print
+        var printFormat = arr.join(''); // format array print
 
         // If the player did not bust, print embed
         if (total <= 21) {
@@ -268,12 +267,12 @@ exports.run = (client, message, args, userid) => {
 
         for (i = 0; i < DealerHand.length; i++) {
             var card = DealerHand[i];
-            var num = card.substring(0, 2);
+            var num = card.substring(2, 3);
             num = num.trim();
             console.log(num);
-            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+            if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                 num = 10;
-            } else if (num == 'Ac') {
+            } else if (num == 'a') {
                 if (total <= 10) {
                     num = 11;
                 } else {
@@ -289,13 +288,13 @@ exports.run = (client, message, args, userid) => {
             var anotherCard = deck.deal();
             DealerHand.push(anotherCard);
 
-            var num = anotherCard.substring(0, 2);
+            var num = anotherCard.substring(2, 3);
             num = num.trim();
 
             console.log(num);
-            if (num == 'Ja' || num == 'Qu' || num == 'Ki') {
+            if (num == 'j' || num == 'q' || num == 'k' || num == 't') {
                 num = 10;
-            } else if (num == 'Ac') {
+            } else if (num == 'a') {
                 if (total <= 10) {
                     num = 11;
                 } else {
@@ -306,8 +305,8 @@ exports.run = (client, message, args, userid) => {
             DealerTotal += parseInt(num, 10);
         }
 
-        var printFormat = arr.join(', '); // Format print output for array
-        var printFormatDealer = DealerHand.join(', '); // Format print output for array
+        var printFormat = arr.join(''); // Format print output for array
+        var printFormatDealer = DealerHand.join(''); // Format print output for array
 
         // Send hand embed output
         message.channel.send({
@@ -320,20 +319,20 @@ exports.run = (client, message, args, userid) => {
                 fields: [{
                     name: "YOUR HAND\n",
                     value: printFormat,
-                    inline: true
+                    inline: false
                 }, {
                     name: "YOUR TOTAL\n",
                     value: total,
-                    inline: true
+                    inline: false
                 },
                 {
                     name: "DEALER HAND\n",
                     value: printFormatDealer,
-                    inline: true
+                    inline: false
                 }, {
                     name: "DEALER TOTAL\n",
                     value: DealerTotal,
-                    inline: true
+                    inline: false
                 },
                 ]
             }
@@ -375,11 +374,11 @@ exports.run = (client, message, args, userid) => {
                 fields: [{
                     name: "YOUR HAND\n",
                     value: printFormat,
-                    inline: true
+                    inline: false
                 }, {
                     name: "YOUR TOTAL (**BUSTED**)\n",
                     value: total,
-                    inline: true
+                    inline: false
                 }]
             }
         })

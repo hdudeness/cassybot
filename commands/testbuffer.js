@@ -2,6 +2,7 @@ module.exports = {
     help: false,
     bug: false,
     coin: false,
+    blackjack: true,
     credits: false,
     like: false,
     ping: false,
