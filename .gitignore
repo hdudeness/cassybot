@@ -1,1 +1,3 @@
 git update-index --assume-unchanged ./json/config.json
+*.html
+*.sqlite
