@@ -26,23 +26,29 @@ exports.run = (client, message, args) => {
             const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
             message.channel.send({
                 embed: {
-                    color: 0xfcce01, // Changes color of left-side line
+                    color: 0xFFA500, // Changes color of left-side line
                     author: {
                         name: client.user.username,
                         icon_url: client.user.avatarURL
                     },
                     description: "This is one of the many games that I offer! Say '!help' for a complete list all games!",
                     fields: [{
-                        name: "💰WELCOME TO ROULETTE!💰",
-                        value: `This is a simple game that I provide. You will select a bet amount and then pick one of three colors
-                                This is a standard 37 slot roulette wheel with 18 Red, 18 Black, and 1 Green spot`,
+                        name: "💣WELCOME TO ROULETTE!💣",
+                        value: `This is a simple game that I provide. You will select a bet amount and then pick one of three colors. This is a standard 37 slot roulette wheel with 18 Red, 18 Black, and 1 Green spot`,
                         inline: true
                     },
                     {
+<<<<<<< HEAD
                         name: "WINNINGS",
                         value: `The amount you win when your guess is correct depends on what color you pick
                                 **RED** and **Black** win your bet amount
                                 **GREEN** wins you big with 36X your bet amount`,
+=======
+                        name: "WININGS",
+                        value: `The amount you win when your guess is correct depends on what color you pick:
+                                **RED** and **Black** win your bet amount!
+                                **GREEN** rewards you big with 36X your bet amount!`,
+>>>>>>> 110f6cb0e39daba7e3aaeb63d7b40b4fea3fafab
                         inline: true
                     },
                     {
@@ -97,7 +103,7 @@ exports.run = (client, message, args) => {
             message.channel.send(
                 {
                     embed: {
-                        color: 0xfcce01, // Changes color of left-side line
+                        color: 0xFFA500, // Changes color of left-side line
                         description: `Now enter **red** or **black** or **green**:`
                     }
                 }
@@ -115,7 +121,7 @@ exports.run = (client, message, args) => {
 
                     choiceCollector.stop([console.log("User picked red.")]);
                     message.reply(`you picked red. Good luck!`);
-                    flipCoin();
+                    spinWheel();
                 }
                 else if (message.content.toLowerCase() == "black" || message.content.toLowerCase() == "b") {
                     userChoice = 'black';
@@ -128,7 +134,7 @@ exports.run = (client, message, args) => {
 
                     choiceCollector.stop([console.log("User picked black.")]);
                     message.reply(`you picked black. Good luck!`);
-                    flipCoin();
+                    spinWheel();
                 }
                 else if (message.content.toLowerCase() == "green" || message.content.toLowerCase() == "g") {
                     userChoice = 'green';
@@ -167,8 +173,8 @@ exports.run = (client, message, args) => {
                 message.channel.send(
                     {
                         embed: {
-                            color: 0xfcce01, // Changes color of left-side line
-                            description: "**GREEN**"
+                            color: 0xFFA500, // Changes color of left-side line
+                            description: "💚**GREEN**💚"
 
                         }
                     }
@@ -178,8 +184,8 @@ exports.run = (client, message, args) => {
                 message.channel.send(
                     {
                         embed: {
-                            color: 0xfcce01, // Changes color of left-side line
-                            description: "**RED**"
+                            color: 0xFFA500, // Changes color of left-side line
+                            description: "🔴**RED**🔴"
 
                         }
                     }
@@ -188,8 +194,8 @@ exports.run = (client, message, args) => {
                 message.channel.send(
                     {
                         embed: {
-                            color: 0xfcce01, // Changes color of left-side line
-                            description: "**BLACK**"
+                            color: 0xFFA500, // Changes color of left-side line
+                            description: "⚫**BLACK**⚫"
 
                         }
                     }
@@ -204,14 +210,14 @@ exports.run = (client, message, args) => {
                     message.reply(`you won ** ${bet*16} credits!** You now have ${(currency.credits + bet*36)} credits.`);
                 }
                 // red win
-                else if (wheelSlot >= 1 && coinDecider <= 16 && wheelSlot == "red"){
+                else if (wheelSlot >= 1 && wheelSlot <= 16 && userChoice == "red"){
                     win = true;
                     // Update database
                     db.exec("UPDATE currency SET credits = credits + " + bet + " WHERE id = " + message.author.id + ";");
                     message.reply(`you won ** ${bet} credits!** You now have ${currency.credits + bet} credits.`);
                 }
                 // black win
-                else if (wheelSlot >= 17 && wheelSlot <= 36 && wheelSlot == "black"){
+                else if (wheelSlot >= 17 && wheelSlot <= 36 && userChoice == "black"){
                     win = true;
                     // Update database
                     db.exec("UPDATE currency SET credits = credits + " + bet + " WHERE id = " + message.author.id + ";");
