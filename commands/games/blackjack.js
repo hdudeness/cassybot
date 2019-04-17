@@ -361,7 +361,7 @@ exports.run = (client, message, args, userid) => {
     function busted() {
 
 
-        var printFormat = arr.join(', '); // Format array print
+        var printFormat = arr.join(''); // Format array print
 
         // Print out busted hand and total
         message.channel.send({
