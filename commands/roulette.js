@@ -22,15 +22,15 @@ exports.run = (client, message, args) => {
 
     function getUserInput() {
         // Make sure the user is in the database.
-        if (!currency) {
-            message.reply(`welcome! I will give you 100 credits to start.`);
-            currency = {
-                id: message.author.id,
-                user: message.author.username,
-                credits: 100
-            }
-            client.setCredits.run(currency);
-        }
+//     if (!currency) {
+//            message.reply(`welcome! I will give you 100 credits to start.`);
+//            currency = {
+//                id: message.author.id,
+//               user: message.author.username,
+//                credits: 100
+//            }
+//            client.setCredits.run(currency);
+//        }   
         // Get bet amount
         if (!betConfirm) {
             const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
@@ -44,7 +44,15 @@ exports.run = (client, message, args) => {
                     description: "This is one of the many games that I offer! Say '!help' for a complete list all games!",
                     fields: [{
                         name: "💰WELCOME TO ROULETTE!💰",
-                        value: `This is a simple game that I provide. You will select a bet amount. Then, you will get to guess whether a coin will flip and land on heads or tails. Finally, I will tell you the outcome. If you win you get double your money! If you loss I keep the credits you chose to bet. Good Luck! `,
+                        value: `This is a simple game that I provide. You will select a bet amount and then pick one of three colors
+                                This is a standard 37 slot roulette wheel with 18 Red, 18 Black, and 1 Green spot`,
+                        inline: true
+                    },
+                    {
+                        name: "WININGS",
+                        value: `The amount you win when your guess is correct depends on what color you pick
+                                **RED** and **Black** win your bet amount
+                                **GREEN** wins you big with 36X your bet amount`,
                         inline: true
                     },
                     {
@@ -100,7 +108,7 @@ exports.run = (client, message, args) => {
                 {
                     embed: {
                         color: 0xfcce01, // Changes color of left-side line
-                        description: `Now enter **red** or **black**:`
+                        description: `Now enter **red** or **black** or **green**:`
                     }
                 }
             );
@@ -132,6 +140,19 @@ exports.run = (client, message, args) => {
                     message.reply(`you picked black. Good luck!`);
                     flipCoin();
                 }
+                else if (message.content.toLowerCase() == "green" || message.content.toLowerCase() == "g") {
+                    userChoice = 'green';
+
+                    // Test if choice value matches user input
+                    if ((message.content.toLowerCase() == "green" || "g") && userChoice == "green")
+                        choiceValueTest = true;
+                    else
+                        choiceValueTest = false;
+
+                    choiceCollector.stop([console.log("User picked green.")]);
+                    message.reply(`you picked green. Good luck!`);
+                    spinWheel();
+                }
                 else {
                     choiceSyntaxTest = true;
                     choiceCollector.stop([console.log("Incorrect user syntax.")])
@@ -142,8 +163,8 @@ exports.run = (client, message, args) => {
     }
 
     // Get outcome, take/give credits based on user choice.
-    function flipCoin() {
-        var coinDecider = getRandomInt(1);
+    function spinWheel() {
+        var wheelSlot = getRandomInt(36);
         var win = false;
 
         message.channel.send({
@@ -152,7 +173,18 @@ exports.run = (client, message, args) => {
             ]
         });
         setTimeout(() => {
-            if (coinDecider > .5) {
+            if(wheelSlot == 0){
+                message.channel.send(
+                    {
+                        embed: {
+                            color: 0xfcce01, // Changes color of left-side line
+                            description: "**GREEN**"
+
+                        }
+                    }
+                );
+            }
+            else if (wheelSlot >= 1 && wheelSlot <= 16) {
                 message.channel.send(
                     {
                         embed: {
@@ -174,22 +206,39 @@ exports.run = (client, message, args) => {
                 );
             }
             setTimeout(() => {
-                // Heads win
-                if (coinDecider > .5 && userChoice == "red")
+                // green win
+                if (wheelSlot == 0 && userChoice == "green"){
                     win = true;
-                // Tails win
-                else if (coinDecider < .5 && userChoice == "black")
+                    // Update database
+                    db.exec("UPDATE currency SET credits = credits + " + bet * 16 + " WHERE id = " + message.author.id + ";");
+                    message.reply(`you won ** ${bet*16} credits!** You now have ${(currency.credits + bet*36)} credits.`);
+                }
+                // red win
+                else if (wheelSlot >= 1 && coinDecider <= 16 && wheelSlot == "red"){
                     win = true;
-                // Loss
-                else
+                    // Update database
+                    db.exec("UPDATE currency SET credits = credits + " + bet + " WHERE id = " + message.author.id + ";");
+                    message.reply(`you won ** ${bet} credits!** You now have ${currency.credits + bet} credits.`);
+                }
+                // black win
+                else if (wheelSlot >= 17 && wheelSlot <= 36 && wheelSlot == "black"){
+                    win = true;
+                    // Update database
+                    db.exec("UPDATE currency SET credits = credits + " + bet + " WHERE id = " + message.author.id + ";");
+                    message.reply(`you won ** ${bet} credits!** You now have ${currency.credits + bet} credits.`);
+                }
+                //loss
+                else{
                     win = false;
-                // Update database
-                db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
-                message.reply(`you ` + ((win) ? `won ` : `lost `) + `**` + bet + ` credits!** You now have ` + ((win) ? `${currency.credits + bet}` : `${currency.credits - bet}`) + ` credits.`);
+                    // Update database
+                    db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
+                    message.reply(`you lost ** ${bet} credits!** You now have ${currency.credits - bet} credits.`);
+                }
+                
 
                 // Check database
                 var newCurrency = client.getCredits.get(message.author.id);
-                if (newCurrency.credits == ((win) ? currency.credits + bet : currency.credits - bet))
+                if (newCurrency.credits == ((win) ? (currency.credits + bet || currency.credits + bet * 36) : currency.credits - bet))
                     dbCheck = true;
 
                 printTests();
@@ -210,7 +259,7 @@ exports.run = (client, message, args) => {
 
     // If CassyBot -> Test
     if (message.author == client.user) {
-        buff.coin = true;
+        buff.roulette = true;
     }
 }
 
