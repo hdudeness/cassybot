@@ -178,7 +178,7 @@ exports.run = (client, message, args) => {
                     {
                         embed: {
                             color: 0xFFA500, // Changes color of left-side line
-                            description: "**GREEN**"
+                            description: "💚**GREEN**💚"
 
                         }
                     }
@@ -189,7 +189,7 @@ exports.run = (client, message, args) => {
                     {
                         embed: {
                             color: 0xFFA500, // Changes color of left-side line
-                            description: "**RED**"
+                            description: "🔴**RED**🔴"
 
                         }
                     }
@@ -199,7 +199,7 @@ exports.run = (client, message, args) => {
                     {
                         embed: {
                             color: 0xFFA500, // Changes color of left-side line
-                            description: "**BLACK**"
+                            description: "⚫**BLACK**⚫"
 
                         }
                     }
