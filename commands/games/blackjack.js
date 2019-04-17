@@ -16,16 +16,6 @@ exports.run = (client, message, args, userid) => {
     var bet = 1;
 
     function getUserInput() {
-        // Make sure the user is in the database.
-        if (!currency) {
-            message.reply(`welcome! I will give you 100 credits to start.`);
-            currency = {
-                id: message.author.id,
-                user: message.author.id,
-                credits: 100
-            }
-            client.setCredits.run(currency);
-        }
         // Get bet amount
         if (!betConfirm) {
             const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
