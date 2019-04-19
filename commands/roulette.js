@@ -21,16 +21,6 @@ exports.run = (client, message, args) => {
     var bet = 1;
 
     function getUserInput() {
-        // Make sure the user is in the database.
-//     if (!currency) {
-//            message.reply(`welcome! I will give you 100 credits to start.`);
-//            currency = {
-//                id: message.author.id,
-//               user: message.author.username,
-//                credits: 100
-//            }
-//            client.setCredits.run(currency);
-//        }   
         // Get bet amount
         if (!betConfirm) {
             const betCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
@@ -48,10 +38,10 @@ exports.run = (client, message, args) => {
                         inline: true
                     },
                     {
-                        name: "WININGS",
-                        value: `The amount you win when your guess is correct depends on what color you pick:
-                                **RED** and **Black** win your bet amount!
-                                **GREEN** rewards you big with 36X your bet amount!`,
+                        name: "WINNINGS",
+                        value: `The amount you win when your guess is correct depends on what color you pick
+                                **RED** and **Black** win your bet amount
+                                **GREEN** wins you big with 36X your bet amount`,
                         inline: true
                     },
                     {
