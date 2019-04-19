@@ -355,7 +355,7 @@ exports.run = (client, message, args, userid) => {
     } // ---------------------- STAND -------------------------
 
     // ---------------------- BUST -------------------------
-    function busted() {
+    function busted(sendEmbed) {
         var printFormat = arr.join(''); // Format array print
 
         // Print out busted hand and total
