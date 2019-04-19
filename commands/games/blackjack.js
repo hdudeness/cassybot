@@ -78,6 +78,7 @@ exports.run = (client, message, args, userid) => {
             DealerHand.push(dealerSecondCard);
 
             CardUp = dealerSecondCard; // Show the Dealer's second card
+            CardDown = '<:cardback:567400777803497493>';
 
             // PRINT CARDS 
             var firstCard = deck.deal();
@@ -108,7 +109,8 @@ exports.run = (client, message, args, userid) => {
 
             var printFormat = arr.join(''); // Set up print format
 
-            // Send embed ouput
+            // Send embed output
+            var sendEmbed =
             message.channel.send({
                 embed: {
                     color: 0x000000, // Changes color of left-side line
@@ -123,7 +125,7 @@ exports.run = (client, message, args, userid) => {
                     },
                     {
                         name: "DEALER CARD UP",
-                        value: `${CardUp}`,
+                        value: `${CardUp}${CardDown}`,
                         inline: true
                     }, {
                         name: "NOW ENTER **HIT** OR **STAND**:",
@@ -133,6 +135,7 @@ exports.run = (client, message, args, userid) => {
                     ]
                 }
             })
+            sendEmbed;
 
             // Hit or Stand
             const choiceCollector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { time: 100000 });
@@ -141,12 +144,12 @@ exports.run = (client, message, args, userid) => {
                 if (message.content.toLowerCase() == "hit" || message.content.toLowerCase() == 'h') {
                     userChoice = 'h';
                     choiceCollector.stop(["User picked hit."]);
-                    hit();
+                    hit(sendEmbed);
                 }
                 else if (message.content.toLowerCase() == "stand" || message.content.toLowerCase() == "s") {
                     userChoice = 't';
                     choiceCollector.stop(["User picked stand."]);
-                    stand();
+                    stand(sendEmbed);
                 }
                 else {
                     choiceCollector.stop(["Incorrect user syntax."])
@@ -161,9 +164,10 @@ exports.run = (client, message, args, userid) => {
     var DealerHand = []; // Dealer
     var total = 0; // Player Card Total
     var CardUp; // Dealer's Card Facing Up
+    var CardDown; // Dealer's Card Facing Down
 
     // ---------------------- HIT -------------------------
-    function hit() {
+    function hit(sendEmbed) {
 
         // Card that Player hit
         var newCard = deck.deal();
@@ -195,36 +199,37 @@ exports.run = (client, message, args, userid) => {
 
         // If the player did not bust, print embed
         if (total <= 21) {
-
-            message.channel.send({
-                embed: {
-                    color: 0x000000, // Changes color of left-side line
-                    author: {
-                        name: client.user.username,
-                        icon_url: client.user.avatarURL
-                    },
-                    fields: [{
-                        name: "YOUR HAND",
-                        value: printFormat,
-                        inline: true
-                    },
-                    {
-                        name: "DEALER CARD UP",
-                        value: `${CardUp}`,
-                        inline: true
-                    }, {
-                        name: "NOW ENTER **HIT** OR **STAND**:",
-                        value: `**Total: ${total}**`,
-                        inline: true
-                    },
-                    ]
-                }
+            sendEmbed.then((msg) => {
+                msg.edit({
+                    embed: {
+                        color: 0x000000, // Changes color of left-side line
+                        author: {
+                            name: client.user.username,
+                            icon_url: client.user.avatarURL
+                        },
+                        fields: [{
+                            name: "YOUR HAND",
+                            value: printFormat,
+                            inline: true
+                        },
+                        {
+                            name: "DEALER CARD UP",
+                            value: `${CardUp}${CardDown}`,
+                            inline: true
+                        }, {
+                            name: "NOW ENTER **HIT** OR **STAND**:",
+                            value: `**Total: ${total}**`,
+                            inline: false
+                        },
+                        ]
+                    }
+                })
             })
         }
 
         // Otherwise, if the player busted, print bust embed and return
         if (total > 21) {
-            busted();
+            busted(sendEmbed);
             return;
         }
 
@@ -235,12 +240,12 @@ exports.run = (client, message, args, userid) => {
             if (message.content.toLowerCase() == "hit" || message.content.toLowerCase() == 'h') {
                 userChoice = 'h';
                 choiceCollector.stop(["User picked hit."]);
-                hit();
+                hit(sendEmbed);
             }
             else if (message.content.toLowerCase() == "stand" || message.content.toLowerCase() == "s") {
                 userChoice = 't';
                 choiceCollector.stop(["User picked stand."]);
-                stand();
+                stand(sendEmbed);
             }
             else {
                 choiceCollector.stop(["Incorrect user syntax."])
@@ -251,7 +256,7 @@ exports.run = (client, message, args, userid) => {
     } // ---------------------- HIT -------------------------
 
     // ---------------------- STAND -------------------------
-    function stand() {
+    function stand(sendEmbed) {
 
         DealerTotal = 0; // Find dealer's total
 
@@ -299,33 +304,35 @@ exports.run = (client, message, args, userid) => {
         var printFormatDealer = DealerHand.join(''); // Format print output for array
 
         // Send hand embed output
-        message.channel.send({
-            embed: {
-                color: 0x000000, // Changes color of left-side line
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                fields: [{
-                    name: "YOUR HAND\n",
-                    value: printFormat,
-                    inline: false
-                }, {
-                    name: "YOUR TOTAL\n",
-                    value: total,
-                    inline: false
-                },
-                {
-                    name: "DEALER HAND\n",
-                    value: printFormatDealer,
-                    inline: false
-                }, {
-                    name: "DEALER TOTAL\n",
-                    value: DealerTotal,
-                    inline: false
-                },
-                ]
-            }
+        sendEmbed.then((msg) => {
+            msg.edit({
+                embed: {
+                    color: 0x000000, // Changes color of left-side line
+                    author: {
+                        name: client.user.username,
+                        icon_url: client.user.avatarURL
+                    },
+                    fields: [{
+                        name: "YOUR HAND\n",
+                        value: printFormat,
+                        inline: false
+                    }, {
+                        name: "YOUR TOTAL\n",
+                        value: total,
+                        inline: false
+                    },
+                    {
+                        name: "DEALER HAND\n",
+                        value: printFormatDealer,
+                        inline: false
+                    }, {
+                        name: "DEALER TOTAL\n",
+                        value: DealerTotal,
+                        inline: false
+                    },
+                    ]
+                }
+            })
         })
 
         // Player total is greater than dealer total
@@ -349,28 +356,28 @@ exports.run = (client, message, args, userid) => {
 
     // ---------------------- BUST -------------------------
     function busted() {
-
-
         var printFormat = arr.join(''); // Format array print
 
         // Print out busted hand and total
-        message.channel.send({
-            embed: {
-                color: 0x000000, // Changes color of left-side line
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                fields: [{
-                    name: "YOUR HAND\n",
-                    value: printFormat,
-                    inline: false
-                }, {
-                    name: "YOUR TOTAL (**BUSTED**)\n",
-                    value: total,
-                    inline: false
-                }]
-            }
+        sendEmbed.then((msg) => {
+            msg.edit({
+                embed: {
+                    color: 0x000000, // Changes color of left-side line
+                    author: {
+                        name: client.user.username,
+                        icon_url: client.user.avatarURL
+                    },
+                    fields: [{
+                        name: "YOUR HAND\n",
+                        value: printFormat,
+                        inline: false
+                    }, {
+                        name: "YOUR TOTAL (**BUSTED**)\n",
+                        value: total,
+                        inline: false
+                    }]
+                }
+            })
         })
 
         // Bust Result
