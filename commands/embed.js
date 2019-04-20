@@ -1,4 +1,5 @@
-const buff = require('../testbuffer.js');
+const buff = require('./testbuffer.js');
+
 exports.run = (client, message, args) => {
     message.channel.send({
         embed: {
