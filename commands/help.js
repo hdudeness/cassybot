@@ -15,8 +15,13 @@ exports.run = (client, message, args) => {
                     '**!credits** - Displays the user\'s credits.\n' +
                     '**!ping** - Pong\n' +
                     '**!coinflip** - Flips a coin... Heads or Tails?\n' +
-                    '**!leaderboards** - Displays the Top 10 and user\'s rank.\n' +
+                    `**!blackjack** - Can you get to 21?
+                    **!roulette** - Want to play? Just pick Green, Black, or Red.
+                    **!slot** - Give her a free roll.\n` +
+                    '**!leaderboards** - Displays the Top 10 and the user\'s rank.\n' +
                     '**!embed** - Template\n' +
+                    '**!deal** - Deals a card.\n' +
+                    '**!embed** - Shuffles your deck.\n' +
                     `**!play <SONG>** - Plays the audio to the given song. (YouTube URL or song info) \n` +
                     '**!leave** - Kicks CassyBot from the voice call. \n' +
                     '**!skip** - Skips the current song. \n',
