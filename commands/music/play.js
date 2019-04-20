@@ -4,6 +4,7 @@ const request = require("request");
 const fs = require("fs");
 const getYouTubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
+const Discord = require("discord.js");
 
 // SET UP QUEUES
 var queue = [];
@@ -18,6 +19,7 @@ var skipReq = 0;
 var skippers = [];
 
 exports.run = (client, message, args, config, member, ytmessage, ytargs, ytconfig) => {
+
     const yt_api_key = ytconfig.yt_api_key;
 
     // DON'T USE
@@ -25,94 +27,109 @@ exports.run = (client, message, args, config, member, ytmessage, ytargs, ytconfi
     const prefix = config.prefix;
     const discord_token = ytconfig.discord_token;
 
-    // If member is in a voice channel
-    if (message.member.voiceChannel) {
+    if (ytmessage.startsWith(prefix + "skip")) {
+        message.member.voiceChannel.leave();
+        // if (skippers.indexOf(message.author.id) === -1) {
+        //     skippers.push(message.author.id);
+        //     skipReq++;
+        //     if (skipReq >= Math.ceil((voiceChannel.members.size - 1) / 2)) {
+        //         skip_song(message);
+        //         message.reply(" your skip has been acknowledged. Skipping now!");
+        //     } else {
+        //         message.reply(" your skip has been acknowledged. You need **" + Math.ceil((voiceChannel.members.size - 1) / 2) - skipReq) = "** more skip votes";
+        //     }
+        // } else {
+        //     message.reply(" you already voted to skip!");
+        // }
+    } else {
 
-        // Check if song is playing
-        if (queue.length > 0 || isPlaying) {
+        // If member is in a voice channel
+        if (message.member.voiceChannel) {
 
-            // Get Youtube Video ID
-            getID(ytargs, function (id) {
+            // Check if song is playing
+            if (queue.length > 0 || isPlaying) {
 
-                // Add YouTube Video to Queue using ID
-                add_to_queue(id);
+                // Get Youtube Video ID
+                getID(ytargs, function (id) {
 
-                // After Video Info is retrieved 
-                fetchVideoInfo(id, function (err, videoInfo) {
+                    // Add YouTube Video to Queue using ID
+                    add_to_queue(id);
 
-                    // Check for error
-                    if (err) throw new Error(err);
+                    // After Video Info is retrieved 
+                    fetchVideoInfo(id, function (err, videoInfo) {
 
-                    // Message Channel -> Song in queue with video info
-                    message.reply(" added to queue: **" + videoInfo.title + "**");
-                    queueNames.push(videoInfo.title);
+                        // Check for error
+                        if (err) throw new Error(err);
+
+                        // Message Channel -> Song in queue with video info
+                        message.reply(" added to queue: **" + videoInfo.title + "**");
+                        queueNames.push(videoInfo.title);
+                    });
                 });
-            });
-            // Otherwise
-        } else {
+                // Otherwise
+            } else {
 
-            // Set song is playing to true
-            isPlaying = true;
+                // Set song is playing to true
+                isPlaying = true;
 
-            // Get Youtube Video ID
-            getID(ytargs, function (id) {
+                // Get Youtube Video ID
+                getID(ytargs, function (id) {
 
-                // Add YouTube Video to Queue using ID
-                queue.push(id);
+                    // Add YouTube Video to Queue using ID
+                    queue.push(id);
 
-                // Join call and play video/song
-                playMusic(id, message);
+                    // Join call and play video/song
+                    playMusic(id, message);
 
-                // After Video Info is retrieved 
-                fetchVideoInfo(id, function (err, videoInfo) {
+                    // After Video Info is retrieved 
+                    fetchVideoInfo(id, function (err, videoInfo) {
 
-                    // Check for error
-                    if (err) throw new Error(err);
+                        // Check for error
+                        if (err) throw new Error(err);
 
-                    var timeInMinutes = videoInfo.duration / 60;
-                    var time = videoTime(timeInMinutes);
+                        var timeInMinutes = videoInfo.duration / 60;
+                        var time = videoTime(timeInMinutes);
 
-                    // Message Channel -> Song in queue with video info
-                    queueNames.push(videoInfo.title);
-                    message.channel.send({
-                        embed: {
-                            color: 0xFF0000, // Changes color of left-side line
-                            author: {
-                                name: client.user.username,
-                                icon_url: client.user.avatarURL
-                            },
-                            description: "**Now Playing:**",
-                            fields: [{
-                                name: "🎧 **" + videoInfo.title + "** 🎧",
-                                value: `Duration: ${time} (${videoInfo.duration} seconds)
+                        // Message Channel -> Song in queue with video info
+                        queueNames.push(videoInfo.title);
+                        message.channel.send({
+                            embed: {
+                                color: 0xFF0000, // Changes color of left-side line
+                                author: {
+                                    name: client.user.username,
+                                    icon_url: client.user.avatarURL
+                                },
+                                description: "**Now Playing:**",
+                                fields: [{
+                                    name: "🎧 **" + videoInfo.title + "** 🎧",
+                                    value: `Duration: ${time} (${videoInfo.duration} seconds)
                                         Genre: ${videoInfo.genre}
                                         Click here for the [Video URL](${videoInfo.url}).
                                         Current View Count: 🔥${videoInfo.views} views🔥
                                         **!help** for more options`,
-                                inline: true
+                                    inline: true
+                                }
+                                ],
+                                timestamp: new Date(),
+                                footer: {
+                                    icon_url: message.author.avatarURL,
+                                    text: `Requested by ${message.author.tag}`
+                                }
                             }
-                            ],
-                            timestamp: new Date(),
-                            footer: {
-                                icon_url: message.author.avatarURL,
-                                text: `Requested by ${message.author.tag}`
-                            }
-                        }
-                    })
-                    //message.reply("🎧 now playing: **" + videoInfo.title + "**" + " - " /*videoInfo.description );// */+ " - " + videoInfo.views + " views " + videoInfo.genre);
+                        })
+                        //message.reply("🎧 now playing: **" + videoInfo.title + "**" + " - " /*videoInfo.description );// */+ " - " + videoInfo.views + " views " + videoInfo.genre);
+                    });
                 });
-            });
-        }
-    } else {
+            }
+        } else {
 
-        // If user making request is not in a voice channel - tell them to join
-        message.reply(" please **join** a **voice channel!**");
+            // If user making request is not in a voice channel - tell them to join
+            message.reply(" please **join** a **voice channel!**");
+        }
     }
 
-
-
     function playMusic(id, message) {
-        var voiceChannel = message.member.voiceChannel;
+        voiceChannel = message.member.voiceChannel;
         voiceChannel.join().then(function (connection) {
             stream = ytdl("https://www.youtube.com/watch?v=" + id, {
                 filter: 'audioonly'

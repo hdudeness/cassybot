@@ -68,9 +68,16 @@ client.on('message', message => {
     // MUSIC
     if (ytmessage.startsWith(prefix + "play") || ytmessage.startsWith(prefix + "leave") || ytmessage.startsWith(prefix + "skip")) {
         try {
-            // Search for music commands
-            let commandFile = require(`./commands/music/${command}.js`);
-            commandFile.run(client, message, args, config, member, ytmessage, ytargs, ytconfig);
+            if (ytmessage.startsWith(prefix + "skip")) {
+                // Search for music commands
+                let commandFile = require(`./commands/music/play.js`);
+                commandFile.run(client, message, args, config, member, ytmessage, ytargs, ytconfig);
+            } else {
+                // Search for music commands
+                let commandFile = require(`./commands/music/${command}.js`);
+                commandFile.run(client, message, args, config, member, ytmessage, ytargs, ytconfig);
+            }
+
 
         } catch (err) {
 
