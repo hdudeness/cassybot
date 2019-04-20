@@ -11,5 +11,7 @@ module.exports = {
     roulette: false,
     slot: false,
     shuffle: false,
+    deal: false,
+    embed: false,
     numTested: 0
 }

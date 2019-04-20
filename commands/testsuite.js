@@ -72,33 +72,8 @@ exports.run = async (client, message, args) => {
         });
     }
 
-    // TEST ROULETTE
-
-    message.channel.send('-------------------------------------------------------')
-    message.channel.send('!roulettetest');
-    const msgRoul = await message.channel.awaitMessages(msgRoul => message.content.includes("roulettetest"), { time: 15000 });
-
-    if (!buff.coin) {
-        console.log(buff.roulette)
-        message.reply('**ERROR**')
-        fs.appendFile('testsuite.txt', `Test Roulette - !!!ERROR!!!\n`, function (err) {
-            if (err) {
-                console.log('Unable to write to file');
-            }
-        });
-        return;
-    } else {
-        message.channel.send('**Passed**');
-        fs.appendFile('testsuite.txt', `Test Roulette - Passed\n`, function (err) {
-            if (err) {
-                console.log('Unable to write to file');
-            }
-        });
-    }
-
-
-    // TEST COINFLIP
-
+    // TEST SLOT
+    // setTimeout(() => {
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!slot');
     const msgSlot = await message.channel.awaitMessages(msgSlot => message.content.includes("slot"), { time: 15000 });
@@ -121,13 +96,15 @@ exports.run = async (client, message, args) => {
         });
     }
 
+    //}, 5000)
+
     // TEST SHUFFLE
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!shuffle')
-    const msgPing = await message.channel.awaitMessages(msgPing => message.content.includes("shuffle"), { time: 5000 });
+    const msgShuff = await message.channel.awaitMessages(msgShuff => message.content.includes("shuffle"), { time: 5000 });
 
-    if (!buff.ping) {
-        console.log(buff.ping)
+    if (!buff.shuffle) {
+        console.log(buff.shuffle)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Shuffle - !!!ERROR!!!\n`, function (err) {
             if (err) {
@@ -138,6 +115,52 @@ exports.run = async (client, message, args) => {
     } else {
         message.channel.send('**Passed**');
         fs.appendFile('testsuite.txt', `Test Shuffle - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+    }
+
+    // TEST DEAL
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!deal')
+    const msgDeal = await message.channel.awaitMessages(msgDeal => message.content.includes("shuffle"), { time: 5000 });
+
+    if (!buff.deal) {
+        console.log(buff.deal)
+        message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Deal - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+        return;
+    } else {
+        message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Deal - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+    }
+
+    // TEST CREDITS
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!credits')
+    const msgCred = await message.channel.awaitMessages(msgCred => message.content.includes("shuffle"), { time: 5000 });
+
+    if (!buff.credits) {
+        console.log(buff.credits)
+        message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Credits - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+        return;
+    } else {
+        message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Credits - Passed\n`, function (err) {
             if (err) {
                 console.log('Unable to write to file');
             }
@@ -161,6 +184,29 @@ exports.run = async (client, message, args) => {
     } else {
         message.channel.send('**Passed**');
         fs.appendFile('testsuite.txt', `Test Ping - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+    }
+
+    // TEST EMBED
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!embed')
+    const msgEmbed = await message.channel.awaitMessages(msgEmbed => message.content.includes("embed"), { time: 5000 });
+
+    if (!buff.embed) {
+        console.log(buff.embed)
+        message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Embed - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+        return;
+    } else {
+        message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Embed - Passed\n`, function (err) {
             if (err) {
                 console.log('Unable to write to file');
             }
@@ -220,6 +266,30 @@ exports.run = async (client, message, args) => {
     } else {
         message.channel.send('**Passed**');
         fs.appendFile('testsuite.txt', `Test Leaderboards - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+    }
+
+    // TEST ROULETTE
+
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!roulettetest');
+    const msgRoul = await message.channel.awaitMessages(msgRoul => message.content.includes("roulettetest"), { time: 15000 });
+
+    if (!buff.coin) {
+        console.log(buff.roulette)
+        message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Roulette - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+        return;
+    } else {
+        message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Roulette - Passed\n`, function (err) {
             if (err) {
                 console.log('Unable to write to file');
             }

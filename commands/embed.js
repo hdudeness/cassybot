@@ -1,3 +1,4 @@
+const buff = require('../testbuffer.js');
 exports.run = (client, message, args) => {
     message.channel.send({
         embed: {
@@ -63,5 +64,12 @@ exports.run = (client, message, args) => {
             });
         }, 3000);
     })
+
+    // If CassyBot -> Test
+    if (message.author == client.user) {
+
+        buff.embed = true;
+        console.log(buff.embed);
+    }
 }
 config: { }
