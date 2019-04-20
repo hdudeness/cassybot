@@ -1,14 +1,14 @@
 const buff = require('./testbuffer.js');
 const fs = require('fs');
 
-exports.run = async(client, message, args) => {
-    
+exports.run = async (client, message, args) => {
+
     // // TEST HELP
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!help')
-    const msg = await message.channel.awaitMessages(msg => message.content.includes("help"), {time: 5000}); 
+    const msg = await message.channel.awaitMessages(msg => message.content.includes("help"), { time: 5000 });
 
-    if(!buff.help){
+    if (!buff.help) {
         console.log(buff.help)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Help - !!!ERROR!!!\n`, function (err) {
@@ -29,9 +29,9 @@ exports.run = async(client, message, args) => {
     // TEST BLACKJACK
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!blackjacktest');
-    const msgBlackjack = await message.channel.awaitMessages(msgBlackjack => message.content.includes("blackjacktest"), {time: 15000});
+    const msgBlackjack = await message.channel.awaitMessages(msgBlackjack => message.content.includes("blackjacktest"), { time: 15000 });
 
-    if(!buff.blackjack){
+    if (!buff.blackjack) {
         console.log(buff.blackjack)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Blackjack - !!!ERROR!!!\n`, function (err) {
@@ -48,13 +48,13 @@ exports.run = async(client, message, args) => {
             }
         });
     }
-    
+
     // TEST COINFLIP
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!cointest');
-    const msgCoin = await message.channel.awaitMessages(msgCoin => message.content.includes("cointest"), {time: 15000});
+    const msgCoin = await message.channel.awaitMessages(msgCoin => message.content.includes("cointest"), { time: 15000 });
 
-    if(!buff.coin){
+    if (!buff.coin) {
         console.log(buff.coin)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Coinflip - !!!ERROR!!!\n`, function (err) {
@@ -73,11 +73,12 @@ exports.run = async(client, message, args) => {
     }
 
     // TEST ROULETTE
+
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!roulettetest');
-    const msgRoul = await message.channel.awaitMessages(msgRoul => message.content.includes("roulettetest"), {time: 15000});
+    const msgRoul = await message.channel.awaitMessages(msgRoul => message.content.includes("roulettetest"), { time: 15000 });
 
-    if(!buff.coin){
+    if (!buff.coin) {
         console.log(buff.roulette)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Roulette - !!!ERROR!!!\n`, function (err) {
@@ -95,12 +96,14 @@ exports.run = async(client, message, args) => {
         });
     }
 
+
     // TEST COINFLIP
+
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!slot');
-    const msgSlot = await message.channel.awaitMessages(msgSlot => message.content.includes("slot"), {time: 15000});
+    const msgSlot = await message.channel.awaitMessages(msgSlot => message.content.includes("slot"), { time: 15000 });
 
-    if(!buff.slot){
+    if (!buff.slot) {
         console.log(buff.slot)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Slot - !!!ERROR!!!\n`, function (err) {
@@ -118,27 +121,35 @@ exports.run = async(client, message, args) => {
         });
     }
 
-    /*
-    // TEST LIKE
+    // TEST SHUFFLE
     message.channel.send('-------------------------------------------------------')
-    message.channel.send('!like')
-    const msgLike = await message.channel.awaitMessages(msgLike => msgLike.content.includes("Like"), {time: 3000});
+    message.channel.send('!shuffle')
+    const msgPing = await message.channel.awaitMessages(msgPing => message.content.includes("shuffle"), { time: 5000 });
 
-    if(!buff.like){
-        console.log(buff.like)
+    if (!buff.ping) {
+        console.log(buff.ping)
         message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Shuffle - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
         return;
     } else {
         message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Shuffle - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
     }
-    */
-   
+
     // TEST PING
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!ping')
-    const msgPing = await message.channel.awaitMessages(msgPing => message.content.includes("ping"), {time: 5000});
+    const msgPing = await message.channel.awaitMessages(msgPing => message.content.includes("ping"), { time: 5000 });
 
-    if(!buff.ping){
+    if (!buff.ping) {
         console.log(buff.ping)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Ping - !!!ERROR!!!\n`, function (err) {
@@ -159,9 +170,9 @@ exports.run = async(client, message, args) => {
     // TEST TABLEFLIP
     message.channel.send('-------------------------------------------------------')
     message.channel.send('(╯°□°）╯︵ ┻━┻')
-    const msgTable= await message.channel.awaitMessages(msgTable => message.content.includes("(╯°□°）╯︵ ┻━┻"), {time: 5000});
+    const msgTable = await message.channel.awaitMessages(msgTable => message.content.includes("(╯°□°）╯︵ ┻━┻"), { time: 5000 });
 
-    if(!buff.table){
+    if (!buff.table) {
         console.log(buff.table)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Tableflip - !!!ERROR!!!\n`, function (err) {
@@ -195,9 +206,9 @@ exports.run = async(client, message, args) => {
     // TEST LEADERBOARDS
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!leaderboards')
-    const msgLeader= await message.channel.awaitMessages(msgLeader => message.content.includes("leaderboards"), {time: 5000});
-    
-    if(!buff.leader){
+    const msgLeader = await message.channel.awaitMessages(msgLeader => message.content.includes("leaderboards"), { time: 5000 });
+
+    if (!buff.leader) {
         console.log(buff.leader)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Leaderboards - !!!ERROR!!!\n`, function (err) {
@@ -218,9 +229,9 @@ exports.run = async(client, message, args) => {
     // BUGGY TEST -- INTENTIONAL
     message.channel.send('-------------------------------------------------------')
     message.channel.send('!buggycommand')
-    const msgBug = await message.channel.awaitMessages(msgBug => msgBug.content.includes("buggycommand"), {time: 5000});
+    const msgBug = await message.channel.awaitMessages(msgBug => msgBug.content.includes("buggycommand"), { time: 5000 });
 
-    if(!buff.bug){
+    if (!buff.bug) {
         console.log(buff.bug)
         message.reply('**ERROR**')
         fs.appendFile('testsuite.txt', `Test Bug - !!!ERROR!!!\n`, function (err) {
@@ -239,4 +250,4 @@ exports.run = async(client, message, args) => {
     }
 }
 
-config: {}
+config: { }

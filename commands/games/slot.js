@@ -1,4 +1,7 @@
 exports.run = (client, message, args) => {
+
+    const buff = require('../testbuffer.js');
+
     const Discord = require("discord.js");
     var colors = [0x115DA8, 0xDC143C, 0xFF4500, 0xFFD700, 0x00FF00];
 
@@ -47,13 +50,15 @@ exports.run = (client, message, args) => {
             .setColor(colors[Math.floor(Math.random() * colors.length)])
         message.channel.send(lEmbed)
     }
+    // If CassyBot -> Test
+    if (message.author == client.user) {
+
+        buff.slot = true;
+        console.log(buff.slot);
+    }
+
 }
 
-// If CassyBot -> Test
-if (message.author == client.user) {
 
-    buff.slot = true;
-    console.log(buff.slot);
-}
 
 config: { }

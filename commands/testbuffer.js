@@ -6,9 +6,10 @@ module.exports = {
     credits: false,
     like: false,
     ping: false,
-    table: false,
-    leader: false,
+    table: true,
+    leader: true,
     roulette: false,
     slot: false,
+    shuffle: false,
     numTested: 0
 }
