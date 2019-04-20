@@ -53,10 +53,10 @@ exports.run = (client, message, args) => {
     function choiceReply() {
         var choice = Math.floor(Math.random() * 2);
         if (choice == 0)
-            message.channel.send('red');
-        else {
             message.channel.send('black');
-            userChoice = 'black';
+        else {
+            message.channel.send('red');
+            userChoice = 'red';
         }
     }
 
