@@ -2,11 +2,13 @@ module.exports = {
     help: false,
     bug: false,
     coin: false,
-    blackjack: true,
+    blackjack: false,
     credits: false,
     like: false,
     ping: false,
-    table: true,
+    table: false,
     leader: false,
-    roulette: false
+    roulette: false,
+    slot: false,
+    numTested: 0
 }

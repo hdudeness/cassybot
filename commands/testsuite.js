@@ -72,6 +72,52 @@ exports.run = async(client, message, args) => {
         });
     }
 
+    // TEST ROULETTE
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!roulettetest');
+    const msgRoul = await message.channel.awaitMessages(msgRoul => message.content.includes("roulettetest"), {time: 15000});
+
+    if(!buff.coin){
+        console.log(buff.roulette)
+        message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Roulette - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+        return;
+    } else {
+        message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Roulette - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+    }
+
+    // TEST COINFLIP
+    message.channel.send('-------------------------------------------------------')
+    message.channel.send('!slot');
+    const msgSlot = await message.channel.awaitMessages(msgSlot => message.content.includes("slot"), {time: 15000});
+
+    if(!buff.slot){
+        console.log(buff.slot)
+        message.reply('**ERROR**')
+        fs.appendFile('testsuite.txt', `Test Slot - !!!ERROR!!!\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+        return;
+    } else {
+        message.channel.send('**Passed**');
+        fs.appendFile('testsuite.txt', `Test Slot - Passed\n`, function (err) {
+            if (err) {
+                console.log('Unable to write to file');
+            }
+        });
+    }
+
     /*
     // TEST LIKE
     message.channel.send('-------------------------------------------------------')
