@@ -1,17 +1,6 @@
 exports.run = (client, message, args) => {
-    // General setup
-    const Discord = require("discord.js");
-    const buff = require('./testbuffer.js');
-
-    // Credit system
-    var currency = client.getCredits.get(message.author.id);
-    const Database = require("better-sqlite3");
-    const db = new Database('./user_data/currency.sqlite');
-
     // Testing variables
-    var betConfirm = false;
     const bet = Math.floor(Math.random() * 10) + 2;
-    var choiceConfirm = false;
     var userChoice = 'h';
 
     // This is the "bot"
@@ -139,11 +128,6 @@ exports.run = (client, message, args) => {
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max + 1));
-    }
-
-    // If CassyBot -> Test
-    if (message.author == client.user) {
-        buff.coin = true;
     }
 
 }
