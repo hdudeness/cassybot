@@ -1,3 +1,15 @@
+/* Harrison R. Taylor - hrtaylor@mtu.edu
+Place your bet, pick heads or tails and go! Coinflip utilitizes Discord's collectors
+to take in user input. When the bot asks for the bet amount and the user types in an integer,
+the collectors save this value for later use. What I did was create if-else statements
+for every possible edge case in coinflip. This isn't as bad as it sounds mainly because 
+there's only 2 possible outcomes for coinflip, so we aren't dealing with many edge cases here.
+
+After checking if the user has won or not, the database is updated by adding the amount that the user won to
+their currency database. Instead of using several if statements to do different database queries depending on if the user
+won or not, I stuck with a single ternary statement to simplify (or complicate?).
+*/
+
 exports.run = (client, message, args) => {
 
     // General setup
@@ -8,12 +20,6 @@ exports.run = (client, message, args) => {
     var currency = client.getCredits.get(message.author.id);
     const Database = require("better-sqlite3");
     const db = new Database('./user_data/currency.sqlite');
-
-    // Testing variables
-    var betValueTest = false;
-    var choiceValueTest = false;
-    var dbCheck = false;
-
 
     // getUserInput variables
     var betConfirm = false;
@@ -97,13 +103,6 @@ exports.run = (client, message, args) => {
                 }
                 else if (message.content.toLowerCase() == "tails" || message.content.toLowerCase() == "t") {
                     userChoice = 'tails';
-
-                    // Test if choice value matches user input
-                    if ((message.content.toLowerCase() == "tails" || "t") && userChoice == "tails")
-                        choiceValueTest = true;
-                    else
-                        choiceValueTest = false;
-
                     choiceCollector.stop([console.log("User picked tails.")]);
                     message.reply(`you picked tails. Good luck!`);
                     flipCoin();
@@ -166,7 +165,6 @@ exports.run = (client, message, args) => {
                 // Update database
                 db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
                 message.reply(`you ` + ((win) ? `won ` : `lost `) + `**` + bet + ` credits!** You now have ` + ((win) ? `${currency.credits + bet}` : `${currency.credits - bet}`) + ` credits.`);
-
             }, 1000);
         }, 3000);
     }
