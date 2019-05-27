@@ -62,13 +62,6 @@ exports.run = (client, message, args) => {
                 }
                 else {
                     bet = parseInt(message.content);
-
-                    // Test if stored bet amount matches user input
-                    if (bet == message.content)
-                        betValueTest = true;
-                    else
-                        betValueTest = false;
-
                     betCollector.stop([console.log("Bet recieved.")])
                     message.reply(`your bet is **` + bet + ` credits!**`);
 
@@ -98,13 +91,6 @@ exports.run = (client, message, args) => {
             choiceCollector.on('collect', message => {
                 if (message.content.toLowerCase() == "heads" || message.content.toLowerCase() == 'h') {
                     userChoice = 'heads';
-
-                    // Test if choice value matches user input
-                    if ((message.content.toLowerCase() == "heads" || "h") && userChoice == "heads")
-                        choiceValueTest = true;
-                    else
-                        choiceValueTest = false;
-
                     choiceCollector.stop([console.log("User picked heads.")]);
                     message.reply(`you picked heads. Good luck!`);
                     flipCoin();
@@ -181,23 +167,8 @@ exports.run = (client, message, args) => {
                 db.exec("UPDATE currency SET credits = credits " + ((win) ? "+" : "-") + " " + bet + " WHERE id = " + message.author.id + ";");
                 message.reply(`you ` + ((win) ? `won ` : `lost `) + `**` + bet + ` credits!** You now have ` + ((win) ? `${currency.credits + bet}` : `${currency.credits - bet}`) + ` credits.`);
 
-                // Check database
-                var newCurrency = client.getCredits.get(message.author.id);
-                if (newCurrency.credits == ((win) ? currency.credits + bet : currency.credits - bet))
-                    dbCheck = true;
-
-                printTests();
             }, 1000);
         }, 3000);
-    }
-
-    function printTests() {
-        console.log("\n");
-        console.log("******COINFLIP TESTS******");
-        console.log("betValueTest: " + ((betValueTest) ? "PASSED" : "FAILED"));
-        console.log("choiceValueTest: " + ((choiceValueTest) ? "PASSED" : "FAILED"));
-        console.log("dbCheck: " + ((dbCheck) ? "PASSED" : "FAILED"));
-        console.log("\n");
     }
 
     getUserInput();
